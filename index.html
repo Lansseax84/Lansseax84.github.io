@@ -1,8 +1,972 @@
 <!DOCTYPE html>
+<html lang="es">
 <head>
-    <title>Prova </title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DOKKAEBI // GHOST EYES</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --orange:    #c85a00;
+      --orange-dim:#7a3500;
+      --orange-glow:#ff7a1a;
+      --bg:        #000000;
+      --line:      #1a1a1a;
+      --text-muted:#4a2a10;
+      --green-scan:#0d2200;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--orange);
+      font-family: 'Share Tech Mono', monospace;
+      overflow-x: hidden;
+    }
+
+    /* ── SCAN LINES overlay ─────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,.35) 2px,
+        rgba(0,0,0,.35) 4px
+      );
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* ── NAVBAR ─────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      height: 56px;
+      background: rgba(0,0,0,.92);
+      border-bottom: 1px solid var(--orange-dim);
+      backdrop-filter: blur(6px);
+    }
+
+    .nav-logo {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: .85rem;
+      letter-spacing: .25em;
+      color: var(--orange-glow);
+      text-shadow: 0 0 12px var(--orange);
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: .8rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--orange-dim);
+      text-decoration: none;
+      position: relative;
+      transition: color .2s;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -4px;
+      width: 0; height: 1px;
+      background: var(--orange-glow);
+      box-shadow: 0 0 8px var(--orange);
+      transition: width .3s;
+    }
+
+    .nav-links a:hover { color: var(--orange-glow); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* ── HERO ───────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Dokkaebi background image */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        url('https://static.wikia.nocookie.net/rainbowsix/images/6/6a/Dokkaebi_Badge.png/revision/latest?cb=20180214020117')
+        center center / 38% no-repeat;
+      filter: brightness(.15) sepia(1) saturate(4) hue-rotate(-10deg);
+      transform: scale(1.04);
+      animation: breathe 8s ease-in-out infinite;
+    }
+
+    /* vignette */
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        ellipse 70% 70% at 50% 50%,
+        transparent 30%,
+        rgba(0,0,0,.85) 100%
+      );
+    }
+
+    @keyframes breathe {
+      0%,100% { transform: scale(1.04); opacity: 1; }
+      50%      { transform: scale(1.06); opacity: .85; }
+    }
+
+    /* grid overlay */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: .4;
+    }
+
+    /* corner brackets */
+    .bracket {
+      position: absolute;
+      width: 48px; height: 48px;
+      border-color: var(--orange-dim);
+      border-style: solid;
+      opacity: .7;
+    }
+    .bracket.tl { top:74px; left:20px; border-width:2px 0 0 2px; }
+    .bracket.tr { top:74px; right:20px; border-width:2px 2px 0 0; }
+    .bracket.bl { bottom:20px; left:20px; border-width:0 0 2px 2px; }
+    .bracket.br { bottom:20px; right:20px; border-width:0 2px 2px 0; }
+
+    /* ── HERO CONTENT ───────────────────────────────── */
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .hero-tag {
+      font-size: .7rem;
+      letter-spacing: .4em;
+      color: var(--orange-dim);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      animation: fadeUp .8s .2s both;
+    }
+
+    .hero-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(2.8rem, 8vw, 6.5rem);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--orange);
+      text-shadow:
+        0 0 20px var(--orange),
+        0 0 60px rgba(200,90,0,.35);
+      animation: fadeUp .8s .4s both, glitch 6s 2s infinite;
+    }
+
+    .hero-sub {
+      font-size: clamp(.75rem, 2vw, 1rem);
+      letter-spacing: .3em;
+      color: var(--orange-dim);
+      margin-top: 1rem;
+      animation: fadeUp .8s .6s both;
+    }
+
+    .hero-divider {
+      width: 180px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--orange), transparent);
+      margin: 2rem auto;
+      animation: fadeUp .8s .7s both;
+    }
+
+    .hero-desc {
+      max-width: 520px;
+      font-size: .82rem;
+      line-height: 1.9;
+      color: var(--orange-dim);
+      margin: 0 auto 2.5rem;
+      animation: fadeUp .8s .8s both;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      font-family: 'Orbitron', sans-serif;
+      font-size: .75rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--orange);
+      padding: .75rem 2.2rem;
+      text-decoration: none;
+      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+      transition: background .2s, box-shadow .2s;
+      animation: fadeUp .8s .9s both;
+    }
+    .hero-cta:hover {
+      background: var(--orange-glow);
+      box-shadow: 0 0 24px rgba(255,122,26,.5);
+    }
+
+    /* ── SECTIONS ───────────────────────────────────── */
+    section {
+      padding: 5rem 2rem;
+      max-width: 960px;
+      margin: 0 auto;
+      scroll-margin-top: 56px;
+    }
+
+    .section-tag {
+      font-size: .65rem;
+      letter-spacing: .45em;
+      color: var(--orange-dim);
+      text-transform: uppercase;
+      margin-bottom: .6rem;
+    }
+
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.4rem, 4vw, 2.4rem);
+      font-weight: 700;
+      color: var(--orange);
+      text-shadow: 0 0 12px rgba(200,90,0,.4);
+      margin-bottom: 2rem;
+    }
+
+    .section-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, var(--orange-dim), transparent);
+      margin-bottom: 2.5rem;
+    }
+
+    /* cards */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      border: 1px solid var(--orange-dim);
+      padding: 1.5rem;
+      position: relative;
+      background: rgba(200,90,0,.04);
+      transition: border-color .3s, background .3s;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--orange-dim);
+      transition: background .3s;
+    }
+    .card:hover { border-color: var(--orange); background: rgba(200,90,0,.08); }
+    .card:hover::before { background: var(--orange-glow); }
+
+    .card-num {
+      font-size: .65rem;
+      letter-spacing: .3em;
+      color: var(--text-muted);
+      margin-bottom: .6rem;
+    }
+
+    .card-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: .9rem;
+      color: var(--orange);
+      margin-bottom: .6rem;
+    }
+
+    .card-body {
+      font-size: .78rem;
+      line-height: 1.8;
+      color: var(--orange-dim);
+    }
+
+    /* code block */
+    .code-block {
+      background: #0a0400;
+      border: 1px solid var(--orange-dim);
+      border-left: 3px solid var(--orange);
+      padding: 1.2rem 1.5rem;
+      font-size: .8rem;
+      line-height: 2;
+      color: var(--orange-dim);
+      overflow-x: auto;
+      margin-bottom: 1rem;
+    }
+    .code-block span { color: var(--orange-glow); }
+
+    /* download button */
+    .dl-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .7rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: .75rem;
+      letter-spacing: .15em;
+      color: var(--orange);
+      border: 1px solid var(--orange-dim);
+      padding: .9rem 2rem;
+      text-decoration: none;
+      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+      transition: all .25s;
+      margin-top: 1.5rem;
+    }
+    .dl-btn:hover {
+      background: rgba(200,90,0,.12);
+      border-color: var(--orange-glow);
+      box-shadow: 0 0 18px rgba(200,90,0,.3);
+      color: var(--orange-glow);
+    }
+    .dl-btn svg { width:16px; height:16px; fill:currentColor; }
+
+    /* doc preview */
+    .doc-box {
+      border: 1px solid var(--orange-dim);
+      padding: 2rem;
+      background: rgba(200,90,0,.03);
+      position: relative;
+    }
+    .doc-box::after {
+      content: 'DOC';
+      position: absolute;
+      top: -9px; right: 16px;
+      font-size: .6rem;
+      letter-spacing: .3em;
+      color: var(--orange-dim);
+      background: var(--bg);
+      padding: 0 .5rem;
+    }
+
+    /* ── FOOTER ─────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--orange-dim);
+      padding: 1.5rem 2rem;
+      text-align: center;
+      font-size: .65rem;
+      letter-spacing: .2em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    /* ── ANIMATIONS ─────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(18px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    @keyframes glitch {
+      0%,94%,100% { text-shadow: 0 0 20px var(--orange), 0 0 60px rgba(200,90,0,.35); }
+      95% {
+        text-shadow:
+          -3px 0 #ff4400, 3px 0 var(--orange),
+          0 0 40px rgba(200,90,0,.6);
+      }
+      97% {
+        text-shadow:
+          3px 0 #ff2200, -3px 0 var(--orange),
+          0 0 40px rgba(200,90,0,.6);
+      }
+    }
+
+    /* scrollbar */
+    ::-webkit-scrollbar { width:4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--orange-dim); }
+
+    /* responsive nav */
+    @media(max-width:640px){
+      .nav-links { gap:1rem; }
+      .nav-links a { font-size:.7rem; }
+    }
+  </style>
 </head>
 <body>
-  <hi>hola mon</hi>
+
+  <!-- ── NAVBAR ── -->
+  <nav>
+    <a class="nav-logo" href="#hero">GHOST EYES</a>
+    <ul class="nav-links">
+      <li><a href="#indice">Índice</a></li>
+      <li><a href="#programa">Programa</a></li>
+      <li><a href="#comandos">Comandos</a></li>
+      <li><a href="#descarga">Descarga</a></li>
+      <li><a href="#docs">Docs</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="bracket tl"></div>
+    <div class="bracket tr"></div>
+    <div class="bracket bl"></div>
+    <div class="bracket br"></div>
+
+    <div class="hero-content">
+      <p class="hero-tag">// Rainbow Six Siege · Operator Build</p>
+      <h1 class="hero-title">DOKKAEBI</h1>
+      <p class="hero-sub">GHOST · EYES · PROTOCOL</p>
+      <div class="hero-divider"></div>
+      <p class="hero-desc">
+        Sistema personalizado sobre Kali Linux. Comandos visuales, interfaz
+        táctica y entorno optimizado para reconocimiento y análisis.
+        Acceso restringido — solo operadores autorizados.
+      </p>
+      <a class="hero-cta" href="#indice">ACCEDER AL SISTEMA</a>
+    </div>
+  </section>
+
+  <!-- ── ÍNDICE ── -->
+  <section id="indice">
+    <p class="section-tag">// 01 · NAVEGACIÓN</p>
+    <h2 class="section-title">Índice</h2>
+    <div class="section-divider"></div>
+    <div class="card-grid">
+      <div class="card">
+        <p class="card-num">01</p>
+        <p class="card-title">Programa</p>
+        <p class="card-body">Descripción del entorno, objetivos del proyecto y configuración base de Kali.</p>
+      </div>
+      <div class="card">
+        <p class="card-num">02</p>
+        <p class="card-title">Tipo de comandos</p>
+        <p class="card-body">Listado y clasificación de los comandos personalizados disponibles en el sistema.</p>
+      </div>
+      <div class="card">
+        <p class="card-num">03</p>
+        <p class="card-title">Descarga</p>
+        <p class="card-body">Enlace para descargar el contenido completo del proyecto en un solo paquete.</p>
+      </div>
+      <div class="card">
+        <p class="card-num">04</p>
+        <p class="card-title">Documentación</p>
+        <p class="card-body">Guía de instalación, explicación del sistema y uso correcto de cada herramienta.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROGRAMA ── -->
+  <section id="programa">
+    <p class="section-tag">// 02 · DESCRIPCIÓN</p>
+    <h2 class="section-title">Programa</h2>
+    <div class="section-divider"></div>
+    <p style="font-size:.85rem;line-height:2;color:var(--orange-dim);margin-bottom:2rem;">
+      Este proyecto modifica un Kali Linux estándar para crear un entorno visual, accesible y temático.
+      Incluye arranque personalizado con animación, pantalla de login táctica y comandos con salida
+      formateada y coloreada para que cualquier persona pueda entender el output sin experiencia previa.
+    </p>
+    <div class="card-grid">
+      <div class="card">
+        <p class="card-num">BASE</p>
+        <p class="card-title">Kali Linux Rolling</p>
+        <p class="card-body">Sistema operativo base sin modificaciones de kernel. Solo capa visual y scripts de usuario.</p>
+      </div>
+      <div class="card">
+        <p class="card-num">BOOT</p>
+        <p class="card-title">Animación de arranque</p>
+        <p class="card-body">GIF/Plymouth de La Parca al inicio. Login en negro con líneas verdes y sonido al escribir.</p>
+      </div>
+      <div class="card">
+        <p class="card-num">SHELL</p>
+        <p class="card-title">Terminal personalizada</p>
+        <p class="card-body">Prompt en naranja apagado, alias simplificados, outputs con tablas y colores claros.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── COMANDOS ── -->
+  <section id="comandos" style="max-width:1100px;">
+    <p class="section-tag">// 03 · COMANDOS</p>
+    <h2 class="section-title">Tipo de Comandos</h2>
+    <div class="section-divider"></div>
+
+    <!-- ══ ghost-map CARD ══ -->
+    <div style="border:1px solid var(--orange);margin-bottom:3rem;position:relative;background:rgba(200,90,0,.04);">
+      <div style="position:absolute;top:-11px;left:20px;background:var(--bg);padding:0 .8rem;
+                  font-family:'Orbitron',sans-serif;font-size:.6rem;letter-spacing:.3em;color:var(--orange-glow);">
+        RED · COMANDO PRINCIPAL
+      </div>
+
+      <!-- Header -->
+      <div style="padding:1.5rem 2rem 1rem;border-bottom:1px solid var(--orange-dim);">
+        <div style="display:flex;align-items:baseline;gap:1.5rem;flex-wrap:wrap;">
+          <span style="font-family:'Orbitron',sans-serif;font-size:1.3rem;color:var(--orange-glow);
+                       text-shadow:0 0 16px var(--orange);">ghost-map</span>
+          <span style="font-size:.7rem;color:var(--orange-dim);letter-spacing:.2em;">
+            MAPEO VISUAL DE RED · NAVEGACIÓN INTERACTIVA
+          </span>
+        </div>
+        <div style="display:flex;gap:.7rem;margin-top:.8rem;flex-wrap:wrap;">
+          <span style="font-size:.6rem;letter-spacing:.15em;color:var(--text-muted);
+                       border:1px solid var(--orange-dim);padding:.2rem .6rem;">PYTHON 3</span>
+          <span style="font-size:.6rem;letter-spacing:.15em;color:var(--text-muted);
+                       border:1px solid var(--orange-dim);padding:.2rem .6rem;">SCAPY</span>
+          <span style="font-size:.6rem;letter-spacing:.15em;color:var(--text-muted);
+                       border:1px solid var(--orange-dim);padding:.2rem .6rem;">RICH</span>
+          <span style="font-size:.6rem;letter-spacing:.15em;color:var(--text-muted);
+                       border:1px solid var(--orange-dim);padding:.2rem .6rem;">NMAP</span>
+          <span style="font-size:.6rem;letter-spacing:.15em;color:var(--text-muted);
+                       border:1px solid var(--orange-dim);padding:.2rem .6rem;">CURSES</span>
+        </div>
+      </div>
+
+      <!-- Layout: simulación + info -->
+      <div style="display:grid;grid-template-columns:1fr 380px;gap:0;">
+
+        <!-- ══ SIMULACIÓN ANIMADA 45s ══ -->
+        <div style="border-right:1px solid var(--orange-dim);padding:1.5rem;">
+          <p style="font-size:.6rem;letter-spacing:.3em;color:var(--orange-dim);margin-bottom:.8rem;">
+            // SIMULACIÓN · EJECUCIÓN REAL · 45s
+          </p>
+
+          <!-- Terminal window -->
+          <div id="sim-terminal" style="
+            background:#000;
+            border:1px solid #3a1800;
+            font-family:'Share Tech Mono',monospace;
+            font-size:.72rem;
+            line-height:1.6;
+            min-height:420px;
+            position:relative;
+            overflow:hidden;
+          ">
+            <!-- terminal bar -->
+            <div style="background:#1a0800;padding:.4rem .8rem;display:flex;
+                        align-items:center;gap:.5rem;border-bottom:1px solid #3a1800;">
+              <span style="width:8px;height:8px;border-radius:50%;background:#3a1800;display:inline-block;"></span>
+              <span style="width:8px;height:8px;border-radius:50%;background:#3a1800;display:inline-block;"></span>
+              <span style="width:8px;height:8px;border-radius:50%;background:#7a3500;display:inline-block;"></span>
+              <span style="font-size:.6rem;color:#4a2a10;letter-spacing:.2em;margin-left:.5rem;">
+                root@ghost-eyes: ~
+              </span>
+            </div>
+            <!-- output area -->
+            <div id="sim-output" style="padding:.8rem 1rem;"></div>
+          </div>
+
+          <!-- progress bar de la simulación -->
+          <div style="margin-top:.6rem;display:flex;align-items:center;gap:.8rem;">
+            <div style="flex:1;height:2px;background:#1a0800;position:relative;overflow:hidden;">
+              <div id="sim-progress" style="height:100%;background:var(--orange-dim);
+                   width:0%;transition:width .3s linear;"></div>
+            </div>
+            <span id="sim-timer" style="font-size:.6rem;color:var(--orange-dim);letter-spacing:.1em;
+                                        min-width:40px;text-align:right;">0s</span>
+            <button id="sim-btn" onclick="simRestart()" style="
+              font-family:'Share Tech Mono',monospace;font-size:.6rem;letter-spacing:.15em;
+              color:var(--orange-dim);background:none;border:1px solid var(--orange-dim);
+              padding:.3rem .7rem;cursor:pointer;text-transform:uppercase;
+            ">↺ REINICIAR</button>
+          </div>
+        </div>
+
+        <!-- ══ INFO / FASES ══ -->
+        <div style="padding:1.5rem;">
+          <p style="font-size:.6rem;letter-spacing:.3em;color:var(--orange-dim);margin-bottom:1rem;">
+            // COMPORTAMIENTO
+          </p>
+
+          <div style="margin-bottom:1.2rem;">
+            <p style="font-family:'Orbitron',sans-serif;font-size:.65rem;color:var(--orange);
+                      margin-bottom:.4rem;">FASE 1 · ESCANEO</p>
+            <p style="font-size:.72rem;line-height:1.7;color:var(--orange-dim);">
+              Detecta tu subred automáticamente. Lanza ARP scan silencioso. Barra de progreso en tiempo real.
+            </p>
+          </div>
+
+          <div style="margin-bottom:1.2rem;">
+            <p style="font-family:'Orbitron',sans-serif;font-size:.65rem;color:var(--orange);
+                      margin-bottom:.4rem;">FASE 2 · MAPA ASCII</p>
+            <p style="font-size:.72rem;line-height:1.7;color:var(--orange-dim);">
+              Árbol visual de dispositivos. IP · MAC · fabricante · hostname. Tu posición:
+              <span style="color:#b8860b;">●</span> amarillo oscuro parpadeante.
+            </p>
+          </div>
+
+          <div style="margin-bottom:1.2rem;">
+            <p style="font-family:'Orbitron',sans-serif;font-size:.65rem;color:var(--orange);
+                      margin-bottom:.4rem;">FASE 3 · NAVEGACIÓN</p>
+            <p style="font-size:.72rem;line-height:1.7;color:var(--orange-dim);">
+              Flechas ↑↓ para moverte. ENTER abre panel de detalles. Tras 2 visitas a un nodo
+              el panel no vuelve a abrirse — usa <span style="color:var(--orange);">--in-f</span> para forzarlo.
+            </p>
+          </div>
+
+          <div style="border-top:1px solid var(--orange-dim);padding-top:1rem;margin-top:.5rem;">
+            <p style="font-size:.6rem;letter-spacing:.25em;color:var(--orange-dim);margin-bottom:.6rem;">
+              // FLAGS
+            </p>
+            <div style="font-size:.7rem;line-height:2;color:var(--orange-dim);">
+              <span style="color:var(--orange);">ghost-map</span><br>
+              <span style="color:var(--orange);">ghost-map --in-f</span>
+              &nbsp;<span style="color:var(--text-muted);">forzar panel</span><br>
+              <span style="color:var(--orange);">ghost-map --json</span>
+              &nbsp;<span style="color:var(--text-muted);">exportar datos</span><br>
+              <span style="color:var(--orange);">ghost-map --silent</span>
+              &nbsp;<span style="color:var(--text-muted);">sin progreso</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Otros comandos futuros -->
+    <div class="code-block">
+      <span>OTROS COMANDOS · PRÓXIMAMENTE</span><br>
+      ghost-status            → Dashboard visual del sistema en tiempo real<br>
+      ghost-update            → Actualización automática con barra de progreso<br>
+      ghost-clean             → Limpieza de logs temporales<br>
+      ghost-ssh [host]        → Conexión SSH con log visual<br>
+      ghost-vpn [perfil]      → Conectar / desconectar VPN por nombre
+    </div>
+    <p style="font-size:.75rem;color:var(--text-muted);letter-spacing:.1em;margin-top:.6rem;">
+      // Cada comando nuevo incluirá su propia simulación animada de 45s.
+    </p>
+  </section>
+
+  <!-- ══ SCRIPT DE SIMULACIÓN ══ -->
+  <script>
+  (function(){
+    const SIM_DURATION = 45; // segundos
+
+    const ORANGE      = '#c85a00';
+    const ORANGE_DIM  = '#7a3500';
+    const ORANGE_GLOW = '#ff7a1a';
+    const YELLOW      = '#b8860b';
+    const GREY        = '#444';
+    const GREEN       = '#2d5a1b';
+
+    function span(text, color, extra=''){
+      return `<span style="color:${color};${extra}">${text}</span>`;
+    }
+    function line(html){ return html + '<br>'; }
+
+    // Frames de la simulación: { t: segundo_inicio, html: contenido_acumulado }
+    const FRAMES = [
+      // 0-2s: prompt + comando escrito
+      { t:0, clear:true, content: () =>
+        line(span('root@ghost-eyes', ORANGE_GLOW) + span(':~# ', GREY) +
+             span('sudo ghost-map', ORANGE) + span('█', ORANGE_GLOW))
+      },
+      // 2s: enter, empieza banner
+      { t:2, clear:true, content: () =>
+        line(span('root@ghost-eyes', ORANGE_GLOW) + span(':~# ', GREY) + span('sudo ghost-map', ORANGE)) +
+        line('') +
+        line(span('   ██████╗ ██╗  ██╗ ██████╗ ███████╗████████╗', ORANGE_DIM)) +
+        line(span('  ██╔════╝ ██║  ██║██╔═══██╗██╔════╝╚══██╔══╝', ORANGE_DIM)) +
+        line(span('  ██║  ███╗███████║██║   ██║███████╗   ██║   ', ORANGE)) +
+        line(span('  ██║   ██║██╔══██║██║   ██║╚════██║   ██║   ', ORANGE)) +
+        line(span('  ╚██████╔╝██║  ██║╚██████╔╝███████║   ██║   ', ORANGE_GLOW)) +
+        line(span('   ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚══════╝   ╚═╝   ', ORANGE_GLOW)) +
+        line('') +
+        line(span('  GHOST EYES PROJECT · Mapeo visual de red local', ORANGE_DIM))
+      },
+      // 5s: detecta red
+      { t:5, clear:false, append:true, content: () =>
+        line('') +
+        line(span('  [+] ', ORANGE) + 'IP local detectada  : ' + span('192.168.1.45', ORANGE_GLOW)) +
+        line(span('  [+] ', ORANGE) + 'Subred objetivo     : ' + span('192.168.1.0/24', ORANGE_GLOW)) +
+        line('')
+      },
+      // 7s: barra progreso
+      { t:7, clear:false, append:true, content:() =>
+        line(span('  Iniciando escaneo ARP...', ORANGE_DIM))
+      },
+      { t:8,  clear:false, append:true, content:() => line(span('  [', ORANGE_DIM) + span('████░░░░░░░░░░░░░░░░', ORANGE_DIM) + span(']  20%', ORANGE_DIM)) },
+      { t:10, clear:false, append:true, content:() => line(span('  [', ORANGE_DIM) + span('████████░░░░░░░░░░░░', ORANGE_DIM) + span(']  40%', ORANGE_DIM)) },
+      { t:12, clear:false, append:true, content:() => line(span('  [', ORANGE_DIM) + span('████████████░░░░░░░░', ORANGE_DIM) + span(']  60%', ORANGE_DIM)) },
+      { t:14, clear:false, append:true, content:() => line(span('  [', ORANGE_DIM) + span('████████████████░░░░', ORANGE_DIM) + span(']  80%', ORANGE_DIM)) },
+      { t:16, clear:false, append:true, content:() => line(span('  [', ORANGE) + span('████████████████████', ORANGE) + span('] 100%', ORANGE_GLOW)) +
+        line('') +
+        line(span('  [+] ', ORANGE) + span('6 dispositivos encontrados.', ORANGE_GLOW))
+      },
+
+      // 18s: mapa visual completo
+      { t:18, clear:true, content:() =>
+        line(span('╔══════════════════════════════════════════════════════════╗', ORANGE)) +
+        line(span('║', ORANGE) + '  ' + span('GHOST-MAP · RED LOCAL · 192.168.1.0/24', ORANGE_GLOW) + '              ' + span('║', ORANGE)) +
+        line(span('╚══════════════════════════════════════════════════════════╝', ORANGE)) +
+        line('') +
+        line('  ' + span('◆ 192.168.1.1', ORANGE_GLOW) + '  ' + span('[GATEWAY / ROUTER]', GREY)) +
+        line('  ' + span('│', ORANGE_DIM)) +
+        line('  ' + span('├──', ORANGE_DIM) + ' ○ ' + span('192.168.1.10   ', ORANGE_DIM) + span('Samsung        ', GREY) + span('android-SM-A536', ORANGE_DIM) + span('  [✓ visitado]', GREEN)) +
+        line('  ' + span('│', ORANGE_DIM)) +
+        line('  ' + span('├──', ORANGE_DIM) + ' ○ ' + span('192.168.1.22   ', ORANGE_DIM) + span('Apple          ', GREY) + span('MacBook-Air    ', ORANGE_DIM)) +
+        line('  ' + span('│', ORANGE_DIM)) +
+        line('  ' + span('├──', ORANGE_DIM) + ' ' + span('▶', ORANGE_GLOW) + ' ' + span('●', YELLOW, 'animation:blink 1s step-end infinite') + ' ' + span('192.168.1.45   ', ORANGE_GLOW) + span('Intel          ', GREY) + span('GHOST-EYES-PC  ', ORANGE) + ' ' + span('← TÚ', YELLOW)) +
+        line('  ' + span('│', ORANGE_DIM)) +
+        line('  ' + span('├──', ORANGE_DIM) + ' ○ ' + span('192.168.1.67   ', ORANGE_DIM) + span('Raspberry Pi   ', GREY) + span('raspberrypi    ', ORANGE_DIM)) +
+        line('  ' + span('│', ORANGE_DIM)) +
+        line('  ' + span('├──', ORANGE_DIM) + ' ○ ' + span('192.168.1.89   ', ORANGE_DIM) + span('Desconocido    ', GREY) + span('android-f3a9   ', ORANGE_DIM)) +
+        line('  ' + span('│', ORANGE_DIM)) +
+        line('  ' + span('└──', ORANGE_DIM) + ' ○ ' + span('192.168.1.102  ', ORANGE_DIM) + span('TP-Link        ', GREY) + span('TPLink-extender', ORANGE_DIM)) +
+        line('') +
+        line('  ' + span('[↑↓] Navegar  [ENTER] Detalles  [R] Re-escanear  [Q] Salir', GREY))
+      },
+
+      // 24s: navega hacia arriba (selecciona Raspberry Pi)
+      { t:24, clear:true, content:() =>
+        line(span('╔══════════════════════════════════════════════════════════╗', ORANGE)) +
+        line(span('║', ORANGE) + '  ' + span('GHOST-MAP · RED LOCAL · 192.168.1.0/24', ORANGE_GLOW) + '              ' + span('║', ORANGE)) +
+        line(span('╚══════════════════════════════════════════════════════════╝', ORANGE)) +
+        line('') +
+        line('  ' + span('◆ 192.168.1.1', ORANGE_GLOW) + '  ' + span('[GATEWAY / ROUTER]', GREY)) +
+        line('  ' + span('│', ORANGE_DIM)) +
+        line('  ' + span('├──', ORANGE_DIM) + ' ○ ' + span('192.168.1.10   ', ORANGE_DIM) + span('Samsung        ', GREY) + span('android-SM-A536', ORANGE_DIM) + span('  [✓ visitado]', GREEN)) +
+        line('  ' + span('│', ORANGE_DIM)) +
+        line('  ' + span('├──', ORANGE_DIM) + ' ○ ' + span('192.168.1.22   ', ORANGE_DIM) + span('Apple          ', GREY) + span('MacBook-Air    ', ORANGE_DIM)) +
+        line('  ' + span('│', ORANGE_DIM)) +
+        line('  ' + span('├──', ORANGE_DIM) + ' ○ ' + span('●', YELLOW) + ' ' + span('192.168.1.45   ', ORANGE_DIM) + span('Intel          ', GREY) + span('GHOST-EYES-PC  ', ORANGE_DIM) + ' ' + span('← TÚ', YELLOW)) +
+        line('  ' + span('│', ORANGE_DIM)) +
+        line('  ' + span('├──', ORANGE_DIM) + ' ' + span('▶', ORANGE_GLOW) + ' ○ ' + span('192.168.1.67   ', ORANGE_GLOW) + span('Raspberry Pi   ', GREY) + span('raspberrypi    ', ORANGE)) +
+        line('  ' + span('│', ORANGE_DIM)) +
+        line('  ' + span('├──', ORANGE_DIM) + ' ○ ' + span('192.168.1.89   ', ORANGE_DIM) + span('Desconocido    ', GREY) + span('android-f3a9   ', ORANGE_DIM)) +
+        line('  ' + span('│', ORANGE_DIM)) +
+        line('  ' + span('└──', ORANGE_DIM) + ' ○ ' + span('192.168.1.102  ', ORANGE_DIM) + span('TP-Link        ', GREY) + span('TPLink-extender', ORANGE_DIM)) +
+        line('') +
+        line('  ' + span('[↑↓] Navegar  [ENTER] Detalles  [R] Re-escanear  [Q] Salir', GREY))
+      },
+
+      // 28s: panel de detalles Raspberry Pi
+      { t:28, clear:true, content:() =>
+        line('') +
+        line(span('  → Escaneando puertos...', ORANGE_DIM)) +
+        line('') +
+        line(span('╔══════════════════════════════════════════════╗', ORANGE)) +
+        line(span('║', ORANGE) + '  ' + span('DISPOSITIVO · DETALLES', ORANGE_GLOW) + '                        ' + span('║', ORANGE)) +
+        line(span('╠══════════════════════════════════════════════╣', ORANGE)) +
+        line(span('║', ORANGE) + '  ' + span('IP        ', ORANGE_DIM) + span('192.168.1.67                    ', ORANGE_GLOW) + span('║', ORANGE)) +
+        line(span('║', ORANGE) + '  ' + span('MAC       ', ORANGE_DIM) + 'dc:a6:32:4f:1a:88                ' + span('║', ORANGE)) +
+        line(span('║', ORANGE) + '  ' + span('VENDOR    ', ORANGE_DIM) + 'Raspberry Pi Foundation          ' + span('║', ORANGE)) +
+        line(span('║', ORANGE) + '  ' + span('HOSTNAME  ', ORANGE_DIM) + 'raspberrypi.local                ' + span('║', ORANGE)) +
+        line(span('║', ORANGE) + '  ' + span('PUERTOS   ', ORANGE_DIM) + span('22 (SSH), 80 (HTTP)             ', ORANGE_GLOW) + span('║', ORANGE)) +
+        line(span('║', ORANGE) + '  ' + span('PING      ', ORANGE_DIM) + span('4ms                             ', ORANGE_GLOW) + span('║', ORANGE)) +
+        line(span('║', ORANGE) + '  ' + span('VISITAS   ', ORANGE_DIM) + '1                                ' + span('║', ORANGE)) +
+        line(span('╚══════════════════════════════════════════════╝', ORANGE)) +
+        line('') +
+        line('  ' + span('[ENTER para volver al mapa]', GREY))
+      },
+
+      // 35s: vuelve al mapa, Raspberry marcada como visitada
+      { t:35, clear:true, content:() =>
+        line(span('╔══════════════════════════════════════════════════════════╗', ORANGE)) +
+        line(span('║', ORANGE) + '  ' + span('GHOST-MAP · RED LOCAL · 192.168.1.0/24', ORANGE_GLOW) + '              ' + span('║', ORANGE)) +
+        line(span('╚══════════════════════════════════════════════════════════╝', ORANGE)) +
+        line('') +
+        line('  ' + span('◆ 192.168.1.1', ORANGE_GLOW) + '  ' + span('[GATEWAY / ROUTER]', GREY)) +
+        line('  ' + span('│', ORANGE_DIM)) +
+        line('  ' + span('├──', ORANGE_DIM) + ' ○ ' + span('192.168.1.10   ', ORANGE_DIM) + span('Samsung        ', GREY) + span('android-SM-A536', ORANGE_DIM) + span('  [✓ visitado]', GREEN)) +
+        line('  ' + span('│', ORANGE_DIM)) +
+        line('  ' + span('├──', ORANGE_DIM) + ' ○ ' + span('192.168.1.22   ', ORANGE_DIM) + span('Apple          ', GREY) + span('MacBook-Air    ', ORANGE_DIM)) +
+        line('  ' + span('│', ORANGE_DIM)) +
+        line('  ' + span('├──', ORANGE_DIM) + ' ' + span('▶', ORANGE_GLOW) + ' ' + span('●', YELLOW) + ' ' + span('192.168.1.45   ', ORANGE_GLOW) + span('Intel          ', GREY) + span('GHOST-EYES-PC  ', ORANGE) + ' ' + span('← TÚ', YELLOW)) +
+        line('  ' + span('│', ORANGE_DIM)) +
+        line('  ' + span('├──', ORANGE_DIM) + ' ○ ' + span('192.168.1.67   ', ORANGE_DIM) + span('Raspberry Pi   ', GREY) + span('raspberrypi    ', ORANGE_DIM) + span('  [✓ visitado]', GREEN)) +
+        line('  ' + span('│', ORANGE_DIM)) +
+        line('  ' + span('├──', ORANGE_DIM) + ' ○ ' + span('192.168.1.89   ', ORANGE_DIM) + span('Desconocido    ', GREY) + span('android-f3a9   ', ORANGE_DIM)) +
+        line('  ' + span('│', ORANGE_DIM)) +
+        line('  ' + span('└──', ORANGE_DIM) + ' ○ ' + span('192.168.1.102  ', ORANGE_DIM) + span('TP-Link        ', GREY) + span('TPLink-extender', ORANGE_DIM)) +
+        line('') +
+        line('  ' + span('Dispositivos: 6  │  Tu IP: 192.168.1.45  │  --in-f para forzar info', ORANGE_DIM))
+      },
+
+      // 43s: cierre
+      { t:43, clear:false, append:true, content:() =>
+        line('') +
+        line(span('  [ghost-map] Sesión guardada. q para salir.', ORANGE_DIM)) +
+        line(span('  [ghost-map] Usa --in-f para reabrir paneles ya visitados.', ORANGE_DIM))
+      },
+    ];
+
+    let simInterval = null;
+    let simStart    = null;
+    let frameIdx    = 0;
+    let accHTML     = '';
+
+    function simRender(elapsed){
+      const out   = document.getElementById('sim-output');
+      const prog  = document.getElementById('sim-progress');
+      const timer = document.getElementById('sim-timer');
+      if(!out) return;
+
+      const pct = Math.min(100, (elapsed / SIM_DURATION) * 100);
+      prog.style.width  = pct + '%';
+      timer.textContent = Math.floor(elapsed) + 's';
+
+      // procesar frames pendientes
+      while(frameIdx < FRAMES.length && FRAMES[frameIdx].t <= elapsed){
+        const f = FRAMES[frameIdx];
+        if(f.clear){
+          accHTML = f.content();
+        } else if(f.append){
+          accHTML += f.content();
+        } else {
+          accHTML = f.content();
+        }
+        out.innerHTML = accHTML;
+        frameIdx++;
+      }
+
+      if(elapsed >= SIM_DURATION){
+        clearInterval(simInterval);
+        timer.textContent = '45s';
+        prog.style.background = 'var(--orange)';
+      }
+    }
+
+    function simStart_(){
+      simStart  = Date.now();
+      frameIdx  = 0;
+      accHTML   = '';
+      const out = document.getElementById('sim-output');
+      if(out) out.innerHTML = '';
+      const prog = document.getElementById('sim-progress');
+      if(prog){ prog.style.width='0%'; prog.style.background='var(--orange-dim)'; }
+      clearInterval(simInterval);
+      simInterval = setInterval(()=>{
+        const elapsed = (Date.now() - simStart) / 1000;
+        simRender(elapsed);
+      }, 100);
+    }
+
+    window.simRestart = function(){ simStart_(); };
+
+    // Arrancar cuando el elemento sea visible (IntersectionObserver)
+    const target = document.getElementById('sim-terminal');
+    if(target && 'IntersectionObserver' in window){
+      const obs = new IntersectionObserver((entries)=>{
+        if(entries[0].isIntersecting){
+          simStart_();
+          obs.disconnect();
+        }
+      }, { threshold: 0.3 });
+      obs.observe(target);
+    } else {
+      simStart_();
+    }
+  })();
+  </script>
+
+  <!-- ── DESCARGA ── -->
+  <section id="descarga">
+    <p class="section-tag">// 04 · PAQUETE</p>
+    <h2 class="section-title">Enlace de Descarga</h2>
+    <div class="section-divider"></div>
+
+    <p style="font-size:.85rem;line-height:2;color:var(--orange-dim);margin-bottom:1.5rem;">
+      Descarga el paquete completo: Kali Linux con todas las modificaciones de diseño,
+      sonido en login, mapa de red interactivo y comandos <code style="color:var(--orange)">ghost-*</code> ya instalados.
+      Ejecuta <code style="color:var(--orange)">./install.sh</code> como root sobre un Kali base y el sistema
+      quedará listo. En fases futuras se ofrecerá como ISO booteable directa.
+    </p>
+
+    <!-- Contenido del paquete -->
+    <div class="code-block" style="margin-bottom:1.5rem;">
+      <span>CONTENIDO DEL PAQUETE — ghost-eyes-v1.zip</span><br><br>
+
+      <span style="color:var(--orange-dim);">DISEÑO Y ARRANQUE</span><br>
+      /boot-anim/              → Animación Plymouth (La Parca) al encender<br>
+      /login-theme/            → Fondo negro · texto verde · brackets táctica<br>
+      /sounds/key-soft.wav     → Sonido suave por tecla en pantalla de login<br><br>
+
+      <span style="color:var(--orange-dim);">DOTFILES · TERMINAL</span><br>
+      /dotfiles/.bashrc        → Prompt naranja · aliases · bienvenida<br>
+      /dotfiles/.zshrc         → Igual para ZSH<br>
+      /dotfiles/.Xresources    → Colores de terminal<br><br>
+
+      <span style="color:var(--orange-dim);">COMANDOS · RED</span><br>
+      /python/ghost-map.py     → Mapa visual interactivo de red + navegación<br><br>
+
+      <span style="color:var(--orange-dim);">COMANDOS · SISTEMA (próximamente)</span><br>
+      /bash/ghost-status.sh    → Dashboard del sistema<br>
+      /bash/ghost-update.sh    → Actualización visual<br>
+      /bash/ghost-clean.sh     → Limpieza de logs<br><br>
+
+      <span style="color:var(--orange-dim);">INSTALADOR</span><br>
+      install.sh               → Copia scripts · activa Plymouth · configura login · sonido
+    </div>
+
+    <!-- Estado del paquete -->
+    <div style="display:flex;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;">
+      <span style="font-size:.65rem;letter-spacing:.2em;border:1px solid var(--orange);
+                   color:var(--orange);padding:.3rem .8rem;">✓ ghost-map · INCLUIDO</span>
+      <span style="font-size:.65rem;letter-spacing:.2em;border:1px solid var(--orange-dim);
+                   color:var(--orange-dim);padding:.3rem .8rem;">⧖ ghost-status · EN DESARROLLO</span>
+      <span style="font-size:.65rem;letter-spacing:.2em;border:1px solid var(--orange-dim);
+                   color:var(--orange-dim);padding:.3rem .8rem;">⧖ ISO BOOTEABLE · FASE 4</span>
+    </div>
+
+    <a class="dl-btn" href="#">
+      <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
+      DESCARGAR ghost-eyes-v1.zip
+    </a>
+  </section>
+
+  <!-- ── DOCS ── -->
+  <section id="docs">
+    <p class="section-tag">// 05 · MANUAL</p>
+    <h2 class="section-title">Documentación</h2>
+    <div class="section-divider"></div>
+    <div class="doc-box">
+      <p style="font-family:'Orbitron',sans-serif;font-size:.8rem;color:var(--orange);margin-bottom:1.2rem;">
+        GHOST EYES SYSTEM — MANUAL DE USUARIO v1.0
+      </p>
+      <p style="font-size:.8rem;line-height:2;color:var(--orange-dim);">
+        <span style="color:var(--orange);">1. Instalación</span><br>
+        Clonar el repositorio, ejecutar install.sh con privilegios de root. El script configura Plymouth,
+        copia los dotfiles y registra los comandos ghost-* en el PATH del sistema.<br><br>
+        <span style="color:var(--orange);">2. Primera sesión</span><br>
+        Al reiniciar verás la animación de arranque. La pantalla de login es negra con texto verde.
+        Escribe tu usuario: notarás un sonido suave por tecla (via aplay + wav minimalista).<br><br>
+        <span style="color:var(--orange);">3. Uso de comandos</span><br>
+        Escribe <code>ghost-help</code> en cualquier terminal para ver el listado completo con descripción.
+        Cada comando tiene flag --verbose para más detalle y --json para exportar el resultado.<br><br>
+        <span style="color:var(--orange);">4. Personalización</span><br>
+        Edita <code>~/.ghost-config</code> para cambiar colores, deshabilitar sonidos o añadir tus propios alias.
+      </p>
+    </div>
+    <a class="dl-btn" href="#">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>
+      VER DOCUMENTO COMPLETO
+    </a>
+  </section>
+
+  <footer>
+    GHOST EYES PROJECT &nbsp;·&nbsp; KALI CUSTOM BUILD &nbsp;·&nbsp; DOKKAEBI PROTOCOL &nbsp;·&nbsp; ACCESO RESTRINGIDO
+  </footer>
+
 </body>
 </html>
