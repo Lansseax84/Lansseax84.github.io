@@ -422,6 +422,7 @@
       <li><a href="#indice">Índice</a></li>
       <li><a href="#programa">Programa</a></li>
       <li><a href="#comandos">Comandos</a></li>
+      <li><a href="#como-se-ve">Como se ve</a></li>
       <li><a href="#descarga">Descarga</a></li>
       <li><a href="#docs">Docs</a></li>
     </ul>
@@ -657,10 +658,10 @@
     </p>
   </section>
 
-  <!-- ══ SCRIPT DE SIMULACIÓN ══ -->
+  <!-- ══ SCRIPT DE SIMULACIÓN ghost-map 90s ══ -->
   <script>
   (function(){
-    const SIM_DURATION = 45; // segundos
+    const SIM_DURATION = 90; // segundos
 
     const ORANGE      = '#c85a00';
     const ORANGE_DIM  = '#7a3500';
@@ -803,10 +804,73 @@
         line('  ' + span('Dispositivos: 6  │  Tu IP: 192.168.1.45  │  --in-f para forzar info', ORANGE_DIM))
       },
 
-      // 43s: cierre
-      { t:43, clear:false, append:true, content:() =>
+      // 43s: alerta de INTRUSO
+      { t:43, clear:true, content:() =>
         line('') +
-        line(span('  [ghost-map] Sesión guardada. q para salir.', ORANGE_DIM)) +
+        line(span('  !' + '!'.repeat(53), '#cc0000')) +
+        line('') +
+        line('  ' + span('     ░░░░░░░░░░░░░░░░░', '#cc0000')) +
+        line('  ' + span('    ░░  ██████████  ░░', '#cc0000')) +
+        line('  ' + span('   ░░  ██  ██  ██  ░░', '#cc0000')) +
+        line('  ' + span('  ░░  ████████████  ░░', '#cc0000')) +
+        line('  ' + span('  ░░  ██ ○    ○ ██  ░░', '#cc0000')) +
+        line('  ' + span('  ░░  ██  ----  ██  ░░', '#cc0000')) +
+        line('  ' + span('  ░░  ████████████  ░░', '#cc0000')) +
+        line('') +
+        line('  ' + span('⚠  POSIBLE INTRUSO DETECTADO  ⚠', '#ffffff')) +
+        line('') +
+        line('  ' + span('IP       ', ORANGE_DIM) + span('192.168.1.199  ← NUNCA VISTO ANTES', '#cc0000')) +
+        line('  ' + span('MAC      ', ORANGE_DIM) + 'a4:c3:f0:91:22:de') +
+        line('  ' + span('VENDOR   ', ORANGE_DIM) + 'Desconocido') +
+        line('') +
+        line('  ' + span('[W] Whitelist  [I] Marcar intruso  [ENTER] Cerrar', GREY)) +
+        line('') +
+        line(span('  !' + '!'.repeat(53), '#cc0000'))
+      },
+
+      // 55s: mapa con intruso en rojo
+      { t:55, clear:true, content:() =>
+        line(span('╔══════════════════════════════════════════════════════════╗', ORANGE)) +
+        line(span('║', ORANGE) + '  ' + span('GHOST-MAP · RED LOCAL · 192.168.1.0/24', ORANGE_GLOW) + '              ' + span('║', ORANGE)) +
+        line(span('╚══════════════════════════════════════════════════════════╝', ORANGE)) +
+        line('') +
+        line('  ' + span('◆ 192.168.1.1', ORANGE_GLOW) + '  ' + span('[GATEWAY]', GREY)) +
+        line('  ' + span('│', ORANGE_DIM)) +
+        line('  ' + span('├──', ORANGE_DIM) + ' ○ ' + span('192.168.1.10   ', ORANGE_DIM) + span('Samsung     ', GREY) + span('android-SM-A536', ORANGE_DIM) + span(' [✓✓]', '#2d5a1b')) +
+        line('  ' + span('│', ORANGE_DIM)) +
+        line('  ' + span('├──', ORANGE_DIM) + ' ○ ' + span('192.168.1.22   ', ORANGE_DIM) + span('Apple       ', GREY) + span('MacBook-Air    ', ORANGE_DIM)) +
+        line('  ' + span('│', ORANGE_DIM)) +
+        line('  ' + span('├──', ORANGE_DIM) + ' ' + span('▶', ORANGE_GLOW) + ' ' + span('●', YELLOW) + ' ' + span('192.168.1.45   ', ORANGE_GLOW) + span('Intel       ', GREY) + span('GHOST-EYES-PC  ', ORANGE) + ' ' + span('← TÚ', YELLOW)) +
+        line('  ' + span('│', ORANGE_DIM)) +
+        line('  ' + span('├──', ORANGE_DIM) + ' ○ ' + span('192.168.1.67   ', ORANGE_DIM) + span('Raspberry Pi', GREY) + span('raspberrypi    ', ORANGE_DIM) + span(' [✓]', '#2d5a1b')) +
+        line('  ' + span('│', ORANGE_DIM)) +
+        line('  ' + span('└──', ORANGE_DIM) + ' ' + span('●', '#cc0000') + ' ' + span('192.168.1.199  ', '#cc0000') + span('Desconocido ', GREY) + span('???            ', '#cc0000') + ' ' + span('← INTRUSO', '#cc0000')) +
+        line('') +
+        line('  ' + span('⚠ 1 INTRUSO · Monitor activo · Revisando cada 30s', '#cc0000')) +
+        line('  ' + span('[↑↓] Nav  [ENTER] Detalles  [R] Rescan  [Q] Salir', GREY))
+      },
+
+      // 66s: detalles intruso
+      { t:66, clear:true, content:() =>
+        line('') +
+        line(span('╔══════════════════════════════════════════════════════╗', '#cc0000')) +
+        line(span('║', '#cc0000') + '  ' + span('⚠ INTRUSO · DETALLES', '#ffffff') + '                                  ' + span('║', '#cc0000')) +
+        line(span('╠══════════════════════════════════════════════════════╣', '#cc0000')) +
+        line(span('║', '#cc0000') + '  ' + span('IP        ', ORANGE_DIM) + span('192.168.1.199                         ', '#cc0000') + span('║', '#cc0000')) +
+        line(span('║', '#cc0000') + '  ' + span('MAC       ', ORANGE_DIM) + 'a4:c3:f0:91:22:de                     ' + span('║', '#cc0000')) +
+        line(span('║', '#cc0000') + '  ' + span('VENDOR    ', ORANGE_DIM) + 'Desconocido                           ' + span('║', '#cc0000')) +
+        line(span('║', '#cc0000') + '  ' + span('PUERTOS   ', ORANGE_DIM) + span('22 (SSH) · 8080 (HTTP-alt)            ', '#cc0000') + span('║', '#cc0000')) +
+        line(span('║', '#cc0000') + '  ' + span('WHITELIST ', ORANGE_DIM) + span('NO · Primera aparición en la red      ', '#cc0000') + span('║', '#cc0000')) +
+        line(span('╚══════════════════════════════════════════════════════╝', '#cc0000')) +
+        line('') +
+        line('  ' + span('[ENTER para volver al mapa]', GREY))
+      },
+
+      // 80s: sesión final
+      { t:80, clear:false, append:true, content:() =>
+        line('') +
+        line(span('  [ghost-map] Sesión guardada. Intrusos detectados: 1', ORANGE_DIM)) +
+        line(span('  [ghost-map] Monitor detenido. Whitelist: 5 dispositivos', ORANGE_DIM)) +
         line(span('  [ghost-map] Usa --in-f para reabrir paneles ya visitados.', ORANGE_DIM))
       },
     ];
@@ -842,7 +906,7 @@
 
       if(elapsed >= SIM_DURATION){
         clearInterval(simInterval);
-        timer.textContent = '45s';
+        timer.textContent = '90s';
         prog.style.background = 'var(--orange)';
       }
     }
@@ -880,6 +944,126 @@
   })();
   </script>
 
+  <!-- ── GHOST-STATUS ── -->
+  <section id="ghost-status" style="max-width:1100px;scroll-margin-top:56px;">
+    <p class="section-tag">// 03b · SISTEMA</p>
+    <h2 class="section-title">ghost-status</h2>
+    <div class="section-divider"></div>
+
+    <div style="border:1px solid var(--orange-dim);position:relative;background:rgba(200,90,0,.03);margin-bottom:3rem;">
+      <div style="position:absolute;top:-11px;left:20px;background:var(--bg);padding:0 .8rem;
+                  font-family:'Orbitron',sans-serif;font-size:.6rem;letter-spacing:.3em;color:var(--orange-dim);">
+        SISTEMA · DASHBOARD
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 340px;gap:0;">
+        <!-- Simulación ghost-status -->
+        <div style="border-right:1px solid var(--orange-dim);padding:1.5rem;">
+          <p style="font-size:.6rem;letter-spacing:.3em;color:var(--orange-dim);margin-bottom:.8rem;">// SIMULACIÓN · 90s</p>
+          <div id="sim2-terminal" style="background:#000;border:1px solid #3a1800;font-family:'Share Tech Mono',monospace;font-size:.72rem;line-height:1.6;min-height:380px;position:relative;overflow:hidden;">
+            <div style="background:#1a0800;padding:.4rem .8rem;display:flex;align-items:center;gap:.5rem;border-bottom:1px solid #3a1800;">
+              <span style="width:8px;height:8px;border-radius:50%;background:#7a3500;display:inline-block;"></span>
+              <span style="font-size:.6rem;color:#4a2a10;letter-spacing:.2em;margin-left:.5rem;">root@ghost-eyes: ~</span>
+            </div>
+            <div id="sim2-output" style="padding:.8rem 1rem;"></div>
+          </div>
+          <div style="margin-top:.6rem;display:flex;align-items:center;gap:.8rem;">
+            <div style="flex:1;height:2px;background:#1a0800;">
+              <div id="sim2-progress" style="height:100%;background:var(--orange-dim);width:0%;transition:width .3s linear;"></div>
+            </div>
+            <span id="sim2-timer" style="font-size:.6rem;color:var(--orange-dim);min-width:40px;text-align:right;">0s</span>
+            <button onclick="sim2Restart()" style="font-family:'Share Tech Mono',monospace;font-size:.6rem;letter-spacing:.15em;color:var(--orange-dim);background:none;border:1px solid var(--orange-dim);padding:.3rem .7rem;cursor:pointer;">↺ REINICIAR</button>
+          </div>
+        </div>
+
+        <!-- Info ghost-status -->
+        <div style="padding:1.5rem;">
+          <p style="font-family:'Orbitron',sans-serif;font-size:.65rem;color:var(--orange);margin-bottom:.8rem;">FUNCIONES</p>
+          <div style="font-size:.72rem;line-height:2;color:var(--orange-dim);margin-bottom:1.2rem;">
+            · CPU · RAM · Disco en tiempo real<br>
+            · Temperatura GPU (RTX 5060)<br>
+            · Procesos activos más pesados<br>
+            · Estado de red y conexiones<br>
+            · Uptime y carga del sistema<br>
+            · Alertas si algo supera el umbral
+          </div>
+          <div style="border-top:1px solid var(--orange-dim);padding-top:1rem;">
+            <p style="font-size:.6rem;letter-spacing:.25em;color:var(--orange-dim);margin-bottom:.6rem;">// FLAGS</p>
+            <div style="font-size:.7rem;line-height:2;color:var(--orange-dim);">
+              <span style="color:var(--orange);">ghost-status</span><br>
+              <span style="color:var(--orange);">ghost-status --watch</span> <span style="color:var(--text-muted);">live update</span><br>
+              <span style="color:var(--orange);">ghost-status --gpu</span> <span style="color:var(--text-muted);">detalles RTX</span><br>
+              <span style="color:var(--orange);">ghost-status --json</span>
+            </div>
+          </div>
+          <div style="display:flex;gap:.5rem;margin-top:1rem;flex-wrap:wrap;">
+            <span style="font-size:.6rem;border:1px solid var(--orange-dim);color:var(--text-muted);padding:.2rem .6rem;">BASH</span>
+            <span style="font-size:.6rem;border:1px solid var(--orange-dim);color:var(--text-muted);padding:.2rem .6rem;">PYTHON</span>
+            <span style="font-size:.6rem;border:1px solid var(--orange-dim);color:var(--text-muted);padding:.2rem .6rem;">NVIDIA-SMI</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── GHOST-NVIDIA ── -->
+  <section id="ghost-nvidia" style="max-width:1100px;scroll-margin-top:56px;">
+    <p class="section-tag">// 03c · DRIVERS</p>
+    <h2 class="section-title">ghost-nvidia</h2>
+    <div class="section-divider"></div>
+
+    <div style="border:1px solid #7a1a00;position:relative;background:rgba(120,26,0,.06);padding:2rem;margin-bottom:3rem;">
+      <div style="position:absolute;top:-11px;left:20px;background:var(--bg);padding:0 .8rem;
+                  font-family:'Orbitron',sans-serif;font-size:.6rem;letter-spacing:.3em;color:#ff4400;">
+        RTX 5060 · BLACKWELL · DRIVERS
+      </div>
+
+      <p style="font-size:.8rem;line-height:2;color:var(--orange-dim);margin-bottom:1.5rem;">
+        Instalador automático de drivers para la <span style="color:var(--orange);">RTX 5060 (arquitectura Blackwell GB206)</span>.
+        Esta GPU requiere el driver <span style="color:var(--orange);">570.169+</span> con
+        <span style="color:var(--orange);">módulos open</span> — el driver propietario clásico NO es compatible.
+        El script detecta y corrige automáticamente el problema de pantalla negra.
+      </p>
+
+      <div class="code-block" style="margin-bottom:1.5rem;border-left-color:#7a1a00;">
+        <span style="color:#ff6600;">PROBLEMA CONOCIDO — PANTALLA NEGRA TRAS INSTALAR DRIVER</span><br>
+        Causa: instalaste el driver propietario clásico (no el -open)<br>
+        Causa: BIOS en modo Legacy/CSM en lugar de UEFI<br>
+        Causa: kernel demasiado antiguo (necesitas 6.11+)<br>
+        Causa: nouveau no estaba bloqueado antes de instalar nvidia<br><br>
+        <span style="color:#ff6600;">SOLUCIÓN AUTOMÁTICA</span><br>
+        sudo bash ghost-nvidia.sh<br><br>
+        El script hace en orden:<br>
+        1. Verifica modo UEFI (avisa si estás en Legacy)<br>
+        2. Verifica kernel 6.11+ (lo actualiza si es necesario)<br>
+        3. Purga TODOS los drivers nvidia anteriores<br>
+        4. Bloquea nouveau (conflicto directo con nvidia-open)<br>
+        5. Instala nvidia-open-dkms + nvidia-driver 570.169+<br>
+        6. Configura GRUB con nvidia-drm.modeset=1<br>
+        7. Regenera initramfs<br>
+        8. Reinicia (opcional)
+      </div>
+
+      <div class="code-block" style="border-left-color:#7a1a00;">
+        <span style="color:#ff6600;">VERIFICACIÓN POST-INSTALACIÓN</span><br>
+        nvidia-smi                    → Debe mostrar RTX 5060 con driver 570+<br>
+        lsmod | grep nvidia           → nvidia_open debe aparecer<br>
+        dmesg | grep -i nvidia        → Sin errores NVRM<br><br>
+        <span style="color:#ff6600;">SI SIGUE EN PANTALLA NEGRA</span><br>
+        Ctrl+Alt+F3 → acceder a TTY<br>
+        sudo bash ghost-nvidia.sh --rescue   → modo recuperación
+      </div>
+
+      <div style="display:flex;gap:.7rem;margin-top:1.2rem;flex-wrap:wrap;">
+        <span style="font-size:.6rem;border:1px solid #7a1a00;color:#7a1a00;padding:.2rem .6rem;">RTX 5060 GB206</span>
+        <span style="font-size:.6rem;border:1px solid #7a1a00;color:#7a1a00;padding:.2rem .6rem;">DRIVER 570.169+</span>
+        <span style="font-size:.6rem;border:1px solid #7a1a00;color:#7a1a00;padding:.2rem .6rem;">KERNEL 6.11+</span>
+        <span style="font-size:.6rem;border:1px solid #7a1a00;color:#7a1a00;padding:.2rem .6rem;">UEFI REQUIRED</span>
+        <span style="font-size:.6rem;border:1px solid #7a1a00;color:#7a1a00;padding:.2rem .6rem;">OPEN MODULES ONLY</span>
+      </div>
+    </div>
+  </section>
+
   <!-- ── DESCARGA ── -->
   <section id="descarga">
     <p class="section-tag">// 04 · PAQUETE</p>
@@ -888,50 +1072,37 @@
 
     <p style="font-size:.85rem;line-height:2;color:var(--orange-dim);margin-bottom:1.5rem;">
       Descarga el paquete completo: Kali Linux con todas las modificaciones de diseño,
-      sonido en login, mapa de red interactivo y comandos <code style="color:var(--orange)">ghost-*</code> ya instalados.
-      Ejecuta <code style="color:var(--orange)">./install.sh</code> como root sobre un Kali base y el sistema
-      quedará listo. En fases futuras se ofrecerá como ISO booteable directa.
+      sonido en login, mapa de red interactivo, detección de intrusos y comandos <code style="color:var(--orange)">ghost-*</code> ya instalados.
+      Ejecuta <code style="color:var(--orange)">./install.sh</code> como root sobre un Kali base. ISO booteable en fase 4.
     </p>
 
-    <!-- Contenido del paquete -->
     <div class="code-block" style="margin-bottom:1.5rem;">
-      <span>CONTENIDO DEL PAQUETE — ghost-eyes-v1.zip</span><br><br>
-
+      <span>CONTENIDO DEL PAQUETE — ghost-eyes-v2.zip</span><br><br>
       <span style="color:var(--orange-dim);">DISEÑO Y ARRANQUE</span><br>
       /boot-anim/              → Animación Plymouth (La Parca) al encender<br>
-      /login-theme/            → Fondo negro · texto verde · brackets táctica<br>
-      /sounds/key-soft.wav     → Sonido suave por tecla en pantalla de login<br><br>
-
+      /login-theme/            → Fondo negro · texto verde · sonido por tecla<br>
+      /sounds/key-soft.wav     → Sonido suave login<br><br>
       <span style="color:var(--orange-dim);">DOTFILES · TERMINAL</span><br>
-      /dotfiles/.bashrc        → Prompt naranja · aliases · bienvenida<br>
-      /dotfiles/.zshrc         → Igual para ZSH<br>
-      /dotfiles/.Xresources    → Colores de terminal<br><br>
-
+      /dotfiles/.bashrc .zshrc .Xresources → Prompt naranja · colores · aliases<br><br>
       <span style="color:var(--orange-dim);">COMANDOS · RED</span><br>
-      /python/ghost-map.py     → Mapa visual interactivo de red + navegación<br><br>
-
-      <span style="color:var(--orange-dim);">COMANDOS · SISTEMA (próximamente)</span><br>
-      /bash/ghost-status.sh    → Dashboard del sistema<br>
-      /bash/ghost-update.sh    → Actualización visual<br>
-      /bash/ghost-clean.sh     → Limpieza de logs<br><br>
-
+      /python/ghost-map.py     → Mapa visual + detección intrusos + monitor fondo<br><br>
+      <span style="color:var(--orange-dim);">COMANDOS · SISTEMA</span><br>
+      /bash/ghost-status.sh    → Dashboard CPU/GPU/RAM/Red en tiempo real<br>
+      /bash/ghost-nvidia.sh    → Instalador drivers RTX 5060 Blackwell<br><br>
       <span style="color:var(--orange-dim);">INSTALADOR</span><br>
-      install.sh               → Copia scripts · activa Plymouth · configura login · sonido
+      install.sh               → Copia scripts · Plymouth · login · sonido · PATH
     </div>
 
-    <!-- Estado del paquete -->
     <div style="display:flex;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;">
-      <span style="font-size:.65rem;letter-spacing:.2em;border:1px solid var(--orange);
-                   color:var(--orange);padding:.3rem .8rem;">✓ ghost-map · INCLUIDO</span>
-      <span style="font-size:.65rem;letter-spacing:.2em;border:1px solid var(--orange-dim);
-                   color:var(--orange-dim);padding:.3rem .8rem;">⧖ ghost-status · EN DESARROLLO</span>
-      <span style="font-size:.65rem;letter-spacing:.2em;border:1px solid var(--orange-dim);
-                   color:var(--orange-dim);padding:.3rem .8rem;">⧖ ISO BOOTEABLE · FASE 4</span>
+      <span style="font-size:.65rem;letter-spacing:.2em;border:1px solid var(--orange);color:var(--orange);padding:.3rem .8rem;">✓ ghost-map v2 · INCLUIDO</span>
+      <span style="font-size:.65rem;letter-spacing:.2em;border:1px solid var(--orange);color:var(--orange);padding:.3rem .8rem;">✓ ghost-nvidia · INCLUIDO</span>
+      <span style="font-size:.65rem;letter-spacing:.2em;border:1px solid var(--orange-dim);color:var(--orange-dim);padding:.3rem .8rem;">⧖ ghost-status · EN DESARROLLO</span>
+      <span style="font-size:.65rem;letter-spacing:.2em;border:1px solid var(--orange-dim);color:var(--orange-dim);padding:.3rem .8rem;">⧖ ISO BOOTEABLE · FASE 4</span>
     </div>
 
     <a class="dl-btn" href="#">
       <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
-      DESCARGAR ghost-eyes-v1.zip
+      DESCARGAR ghost-eyes-v2.zip
     </a>
   </section>
 
@@ -963,6 +1134,398 @@
       VER DOCUMENTO COMPLETO
     </a>
   </section>
+
+  <!-- ══ SCRIPT SIMULACIÓN ghost-status ══ -->
+  <script>
+  (function(){
+    const DUR2 = 90;
+    const OD2='#7a3500', OG2='#ff7a1a', GR2='#2d5a1b', GREY2='#444';
+    function sp(t,c,x=''){return `<span style="color:${c};${x}">${t}</span>`;}
+    function ln(h){return h+'<br>';}
+    const FRAMES2=[
+      {t:0,clear:true,content:()=>ln(sp('root@ghost-eyes',OG2)+sp(':~# ',GREY2)+sp('ghost-status','#c85a00')+sp('█',OG2))},
+      {t:2,clear:true,content:()=>
+        ln(sp('root@ghost-eyes',OG2)+sp(':~# ',GREY2)+sp('ghost-status','#c85a00'))+ln('')+
+        ln('  '+sp('╔══════════════════════════════════════════════════════╗','#c85a00'))+
+        ln('  '+sp('║','#c85a00')+'  '+sp('GHOST-STATUS · SISTEMA EN TIEMPO REAL',OG2)+'              '+sp('║','#c85a00'))+
+        ln('  '+sp('╚══════════════════════════════════════════════════════╝','#c85a00'))+ln('')+
+        ln('  '+sp('Recopilando datos del sistema...',OD2))
+      },
+      {t:5,clear:true,content:()=>
+        ln('  '+sp('╔══════════════════════════════════════════════════════╗','#c85a00'))+
+        ln('  '+sp('║','#c85a00')+'  '+sp('GHOST-STATUS · DASHBOARD',OG2)+'                          '+sp('║','#c85a00'))+
+        ln('  '+sp('╠══════════════════════════════════════════════════════╣','#c85a00'))+
+        ln('  '+sp('║','#c85a00')+'  '+sp('CPU   ',OD2)+sp('Intel Core i7-13700K','#c85a00')+'  '+sp('│',GREY2)+'  '+sp('24%',GR2)+'  '+sp('████░░░░░░░░',OD2)+'  '+sp('║','#c85a00'))+
+        ln('  '+sp('║','#c85a00')+'  '+sp('RAM   ',OD2)+sp('12.4 GB / 32 GB    ','#c85a00')+'  '+sp('│',GREY2)+'  '+sp('39%',OG2)+'  '+sp('█████░░░░░░░',OD2)+'  '+sp('║','#c85a00'))+
+        ln('  '+sp('║','#c85a00')+'  '+sp('DISCO ',OD2)+sp('220 GB / 512 GB    ','#c85a00')+'  '+sp('│',GREY2)+'  '+sp('43%',OG2)+'  '+sp('█████░░░░░░░',OD2)+'  '+sp('║','#c85a00'))+
+        ln('  '+sp('║','#c85a00')+'  '+sp('GPU   ',OD2)+sp('RTX 5060 8GB · 42°C','#c85a00')+'  '+sp('│',GREY2)+'  '+sp('18%',GR2)+'  '+sp('██░░░░░░░░░░',OD2)+'  '+sp('║','#c85a00'))+
+        ln('  '+sp('║','#c85a00')+'  '+sp('RED   ',OD2)+sp('↑ 1.2 MB/s · ↓ 8.4 MB/s','#c85a00')+'               '+sp('║','#c85a00'))+
+        ln('  '+sp('║','#c85a00')+'  '+sp('UPTIME',OD2)+sp('4h 22m             ','#c85a00')+'  '+sp('│',GREY2)+'  '+sp('Carga: 0.87',GR2)+'       '+sp('║','#c85a00'))+
+        ln('  '+sp('╠══════════════════════════════════════════════════════╣','#c85a00'))+
+        ln('  '+sp('║','#c85a00')+'  '+sp('TOP PROCESOS',OG2)+'                                       '+sp('║','#c85a00'))+
+        ln('  '+sp('║','#c85a00')+'  '+sp('firefox       ',OD2)+sp('PID 2341',GREY2)+'  '+sp('RAM: 1.8GB',OG2)+'  '+sp('CPU: 12%','#c85a00')+'      '+sp('║','#c85a00'))+
+        ln('  '+sp('║','#c85a00')+'  '+sp('code          ',OD2)+sp('PID 4892',GREY2)+'  '+sp('RAM: 890MB','#c85a00')+'  '+sp('CPU:  4%','#c85a00')+'      '+sp('║','#c85a00'))+
+        ln('  '+sp('║','#c85a00')+'  '+sp('ghost-map     ',OD2)+sp('PID 7741',GREY2)+'  '+sp('RAM: 124MB',GR2)+'  '+sp('CPU:  2%',GR2)+'      '+sp('║','#c85a00'))+
+        ln('  '+sp('╚══════════════════════════════════════════════════════╝','#c85a00'))
+      },
+      {t:25,clear:false,append:true,content:()=>ln('')+ln('  '+sp('CPU   ',OD2)+sp('Intel Core i7-13700K','#c85a00')+'  '+sp('│',GREY2)+'  '+sp('78%','#cc0000')+' '+sp('██████████░░','#cc0000')+'  '+sp('← CARGA ALTA','#cc0000'))},
+      {t:40,clear:false,append:true,content:()=>ln('')+ln('  '+sp('CPU   ',OD2)+sp('Intel Core i7-13700K','#c85a00')+'  '+sp('│',GREY2)+'  '+sp('31%',GR2)+' '+sp('████░░░░░░░░',OD2)+'  '+sp('← Normalizado',GR2))},
+      {t:60,clear:false,append:true,content:()=>
+        ln('')+ln('  '+sp('── ghost-status --gpu ──────────────────────────────','#3a1800'))+ln('')+
+        ln('  '+sp('GPU     ',OD2)+sp('NVIDIA RTX 5060 (Blackwell GB206)',OG2))+
+        ln('  '+sp('Driver  ',OD2)+sp('570.169-open','#c85a00'))+
+        ln('  '+sp('Temp    ',OD2)+sp('51°C',OG2)+'   '+sp('│',GREY2)+'  Fan: 38%')+
+        ln('  '+sp('VRAM    ',OD2)+sp('2.1 / 8 GB','#c85a00')+'  '+sp('│',GREY2)+'  '+sp('26%',GR2))+
+        ln('  '+sp('nvidia-smi: OK ✓',GR2))
+      },
+      {t:82,clear:false,append:true,content:()=>ln('')+ln('  '+sp('[ghost-status] Datos guardados. --watch para modo live.',OD2))},
+    ];
+    let si2=null,ss2=null,fi2=0,acc2='';
+    function r2(el){
+      const out=document.getElementById('sim2-output'),pr=document.getElementById('sim2-progress'),tm=document.getElementById('sim2-timer');
+      if(!out) return;
+      pr.style.width=Math.min(100,(el/DUR2)*100)+'%'; tm.textContent=Math.floor(el)+'s';
+      while(fi2<FRAMES2.length&&FRAMES2[fi2].t<=el){const f=FRAMES2[fi2];if(f.clear)acc2=f.content();else if(f.append)acc2+=f.content();out.innerHTML=acc2;fi2++;}
+      if(el>=DUR2){clearInterval(si2);tm.textContent='90s';pr.style.background='var(--orange)';}
+    }
+    function s2(){ss2=Date.now();fi2=0;acc2='';const o=document.getElementById('sim2-output');if(o)o.innerHTML='';const p=document.getElementById('sim2-progress');if(p){p.style.width='0%';p.style.background='var(--orange-dim)';}clearInterval(si2);si2=setInterval(()=>r2((Date.now()-ss2)/1000),100);}
+    window.sim2Restart=function(){s2();};
+    const t2=document.getElementById('sim2-terminal');
+    if(t2&&'IntersectionObserver' in window){const o2=new IntersectionObserver(en=>{if(en[0].isIntersecting){s2();o2.disconnect();}},{threshold:0.3});o2.observe(t2);}else{s2();}
+  })();
+  </script>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- ── COMO SE VE ── -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <section id="como-se-ve" style="max-width:1100px;scroll-margin-top:56px;">
+    <p class="section-tag">// 06 · VISUAL</p>
+    <h2 class="section-title">Como se ve</h2>
+    <div class="section-divider"></div>
+    <p style="font-size:.85rem;line-height:2;color:var(--orange-dim);margin-bottom:2rem;">
+      Así es la experiencia completa desde que enciendes el PC hasta que estás dentro del sistema.
+      Cada pantalla está personalizada.
+    </p>
+
+    <!-- ── PASO 1: Pantalla de arranque Plymouth ── -->
+    <div style="margin-bottom:3rem;">
+      <p style="font-family:'Orbitron',sans-serif;font-size:.75rem;color:var(--orange);margin-bottom:1rem;letter-spacing:.2em;">
+        01 · PANTALLA DE ARRANQUE
+      </p>
+
+      <!-- Simulación Plymouth — chibi Dokkaebi animado en CSS -->
+      <div style="background:#000;border:1px solid #3a1800;position:relative;overflow:hidden;aspect-ratio:16/9;max-height:420px;">
+
+        <!-- Patrón de fondo (X y gotas) -->
+        <div id="boot-pattern" style="position:absolute;inset:0;opacity:.6;">
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="bg-pat" x="0" y="0" width="48" height="48" patternUnits="userSpaceOnUse">
+                <!-- X -->
+                <line x1="6" y1="6" x2="18" y2="18" stroke="#1a1a1a" stroke-width="1"/>
+                <line x1="18" y1="6" x2="6" y2="18" stroke="#1a1a1a" stroke-width="1"/>
+                <!-- Gota -->
+                <ellipse cx="36" cy="12" rx="4" ry="6" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#bg-pat)"/>
+          </svg>
+        </div>
+
+        <!-- Chibi Dokkaebi SVG — idéntico a la imagen enviada -->
+        <div id="boot-chibi" style="position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);animation:chibiFloat 3s ease-in-out infinite;">
+          <svg viewBox="0 0 280 300" width="200" height="215" xmlns="http://www.w3.org/2000/svg">
+            <!-- Cuernos -->
+            <polygon points="78,105 58,42 98,75" fill="#e8e2d0" stroke="#111" stroke-width="3"/>
+            <polygon points="202,105 222,42 182,75" fill="#e8e2d0" stroke="#111" stroke-width="3"/>
+            <!-- Pelo blanco -->
+            <path d="M70,130 Q60,70 80,38 Q140,10 200,38 Q220,70 210,130 Z" fill="#f0ece0" stroke="#111" stroke-width="3"/>
+            <!-- Rayas naranjas pelo -->
+            <polygon points="112,15 130,15 160,90 142,90" fill="#d4880f" opacity=".9"/>
+            <polygon points="130,12 148,10 175,88 157,90" fill="#d4880f" opacity=".85"/>
+            <polygon points="148,13 163,14 187,86 172,85" fill="#d4880f" opacity=".8"/>
+            <!-- Cara base -->
+            <circle cx="140" cy="158" r="102" fill="#f5f0e6" stroke="#111" stroke-width="4"/>
+            <!-- Orejas -->
+            <ellipse cx="37" cy="155" rx="12" ry="18" fill="#f5f0e6" stroke="#111" stroke-width="2"/>
+            <ellipse cx="243" cy="155" rx="12" ry="18" fill="#f5f0e6" stroke="#111" stroke-width="2"/>
+            <!-- Ceja izquierda (baja/seria) -->
+            <line x1="82" y1="138" x2="118" y2="145" stroke="#111" stroke-width="4" stroke-linecap="round"/>
+            <!-- Ceja derecha -->
+            <line x1="162" y1="145" x2="198" y2="138" stroke="#111" stroke-width="4" stroke-linecap="round"/>
+            <!-- Gafa izquierda -->
+            <circle cx="105" cy="162" r="38" fill="#c07a08" stroke="#d4880f" stroke-width="5"/>
+            <circle cx="105" cy="162" r="32" fill="#b06a05"/>
+            <!-- Gafa derecha -->
+            <circle cx="175" cy="162" r="38" fill="#c07a08" stroke="#d4880f" stroke-width="5"/>
+            <circle cx="175" cy="162" r="32" fill="#b06a05"/>
+            <!-- Puente gafas -->
+            <line x1="143" y1="162" x2="137" y2="162" stroke="#d4880f" stroke-width="5"/>
+            <!-- Patillas -->
+            <line x1="67" y1="162" x2="38" y2="158" stroke="#d4880f" stroke-width="4"/>
+            <line x1="213" y1="162" x2="242" y2="158" stroke="#d4880f" stroke-width="4"/>
+            <!-- Ojos (expresión seria/aburrida) -->
+            <ellipse cx="105" cy="168" rx="14" ry="18" fill="#1a1a1a"/>
+            <ellipse cx="175" cy="168" rx="14" ry="18" fill="#1a1a1a"/>
+            <!-- Brillo ojos -->
+            <circle cx="110" cy="162" r="4" fill="#555"/>
+            <circle cx="180" cy="162" r="4" fill="#555"/>
+            <!-- Nariz -->
+            <ellipse cx="140" cy="198" rx="5" ry="4" fill="#c8a890"/>
+            <!-- Boca recta (seria) -->
+            <line x1="118" y1="218" x2="162" y2="218" stroke="#888" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <!-- Texto coreano -->
+        <div style="position:absolute;left:50%;bottom:18%;transform:translateX(-50%);
+                    font-family:'Share Tech Mono',monospace;font-size:1.1rem;
+                    color:#fff;letter-spacing:.12em;white-space:nowrap;
+                    animation:textPulse 2s ease-in-out infinite;">
+          까불지 마
+        </div>
+
+        <!-- Barra de progreso boot -->
+        <div style="position:absolute;bottom:8%;left:8%;right:8%;height:3px;background:#1a0800;">
+          <div id="boot-bar" style="height:100%;background:#c85a00;width:0%;transition:none;
+               animation:bootProgress 6s linear infinite;"></div>
+        </div>
+        <div style="position:absolute;bottom:4%;left:8%;font-family:'Share Tech Mono',monospace;
+                    font-size:.5rem;color:#4a2a10;letter-spacing:.2em;">
+          GHOST EYES
+        </div>
+
+        <!-- Badge "ARRANQUE" -->
+        <div style="position:absolute;top:10px;left:14px;font-family:'Orbitron',sans-serif;
+                    font-size:.5rem;color:#4a2a10;letter-spacing:.25em;">ARRANQUE · PLYMOUTH</div>
+      </div>
+    </div>
+
+    <!-- ── PASO 2: Pantalla de Login ── -->
+    <div style="margin-bottom:3rem;">
+      <p style="font-family:'Orbitron',sans-serif;font-size:.75rem;color:var(--orange);margin-bottom:1rem;letter-spacing:.2em;">
+        02 · PANTALLA DE LOGIN
+      </p>
+      <div style="background:#000;border:1px solid #3a1800;padding:2.5rem 2rem;font-family:'Share Tech Mono',monospace;position:relative;min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        <div style="position:absolute;top:10px;left:14px;font-family:'Orbitron',sans-serif;font-size:.5rem;color:#4a2a10;letter-spacing:.25em;">LOGIN · LIGHTDM</div>
+
+        <!-- Brackets táctica en esquinas -->
+        <div style="position:absolute;top:30px;left:16px;width:24px;height:24px;border-top:1px solid #3a1800;border-left:1px solid #3a1800;"></div>
+        <div style="position:absolute;top:30px;right:16px;width:24px;height:24px;border-top:1px solid #3a1800;border-right:1px solid #3a1800;"></div>
+        <div style="position:absolute;bottom:16px;left:16px;width:24px;height:24px;border-bottom:1px solid #3a1800;border-left:1px solid #3a1800;"></div>
+        <div style="position:absolute;bottom:16px;right:16px;width:24px;height:24px;border-bottom:1px solid #3a1800;border-right:1px solid #3a1800;"></div>
+
+        <div style="font-size:.65rem;color:#1a4a1a;letter-spacing:.4em;margin-bottom:1.5rem;">GHOST EYES OS · ACCESO RESTRINGIDO</div>
+        <div style="font-size:.8rem;color:#2a7a2a;margin-bottom:.6rem;">ghost-eyes login:</div>
+        <div id="login-user" style="font-size:.8rem;color:#3a9a3a;margin-bottom:1rem;min-height:1.2rem;"></div>
+        <div style="font-size:.8rem;color:#2a7a2a;margin-bottom:.6rem;">password:</div>
+        <div style="font-size:.8rem;color:#3a9a3a;letter-spacing:.3em;" id="login-pass"></div>
+      </div>
+    </div>
+
+    <!-- ── PASO 3: Terminal lista ── -->
+    <div style="margin-bottom:3rem;">
+      <p style="font-family:'Orbitron',sans-serif;font-size:.75rem;color:var(--orange);margin-bottom:1rem;letter-spacing:.2em;">
+        03 · TERMINAL DENTRO DEL SISTEMA
+      </p>
+      <div style="background:#000;border:1px solid #3a1800;font-family:'Share Tech Mono',monospace;font-size:.75rem;line-height:1.8;padding:1.2rem 1.4rem;position:relative;">
+        <div style="position:absolute;top:10px;right:14px;font-family:'Orbitron',sans-serif;font-size:.5rem;color:#4a2a10;letter-spacing:.25em;">TERMINAL · ZSH</div>
+        <div style="color:#2d5a1b;">Last login: Thu Apr 16 09:22:41 on tty1</div>
+        <br>
+        <div style="color:#3a1800;">╔══════════════════════════════════════════════╗</div>
+        <div style="color:#3a1800;">║  <span style="color:#c85a00;">GHOST EYES</span> · Sistema operativo táctico     ║</div>
+        <div style="color:#3a1800;">║  Kernel: 6.14.0-kali3-amd64                  ║</div>
+        <div style="color:#3a1800;">║  GPU: RTX 5060 · Driver 570.169-open · OK ✓  ║</div>
+        <div style="color:#3a1800;">╚══════════════════════════════════════════════╝</div>
+        <br>
+        <div><span style="color:#ff7a1a;">root@ghost-eyes</span><span style="color:#444;">:~# </span><span style="color:#c85a00;" id="terminal-typing"></span><span style="color:#ff7a1a;animation:blink 1s step-end infinite;">█</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── GHOST-LOG ── -->
+  <section id="ghost-log" style="max-width:1100px;scroll-margin-top:56px;">
+    <p class="section-tag">// 03d · DIAGNÓSTICO</p>
+    <h2 class="section-title">ghost-log</h2>
+    <div class="section-divider"></div>
+
+    <div style="border:1px solid var(--orange-dim);position:relative;background:rgba(200,90,0,.03);margin-bottom:3rem;">
+      <div style="position:absolute;top:-11px;left:20px;background:var(--bg);padding:0 .8rem;
+                  font-family:'Orbitron',sans-serif;font-size:.6rem;letter-spacing:.3em;color:var(--orange-dim);">
+        DIAGNÓSTICO · LOGS HUMANOS
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:0;">
+        <!-- Simulación ghost-log -->
+        <div style="border-right:1px solid var(--orange-dim);padding:1.5rem;">
+          <p style="font-size:.6rem;letter-spacing:.3em;color:var(--orange-dim);margin-bottom:.8rem;">// SIMULACIÓN · 90s</p>
+          <div id="sim3-terminal" style="background:#000;border:1px solid #3a1800;font-family:'Share Tech Mono',monospace;font-size:.72rem;line-height:1.6;min-height:400px;overflow:hidden;">
+            <div style="background:#1a0800;padding:.4rem .8rem;display:flex;align-items:center;gap:.5rem;border-bottom:1px solid #3a1800;">
+              <span style="width:8px;height:8px;border-radius:50%;background:#7a3500;display:inline-block;"></span>
+              <span style="font-size:.6rem;color:#4a2a10;letter-spacing:.2em;margin-left:.5rem;">root@ghost-eyes: ~</span>
+            </div>
+            <div id="sim3-output" style="padding:.8rem 1rem;"></div>
+          </div>
+          <div style="margin-top:.6rem;display:flex;align-items:center;gap:.8rem;">
+            <div style="flex:1;height:2px;background:#1a0800;"><div id="sim3-progress" style="height:100%;background:var(--orange-dim);width:0%;transition:width .3s linear;"></div></div>
+            <span id="sim3-timer" style="font-size:.6rem;color:var(--orange-dim);min-width:40px;text-align:right;">0s</span>
+            <button onclick="sim3Restart()" style="font-family:'Share Tech Mono',monospace;font-size:.6rem;letter-spacing:.15em;color:var(--orange-dim);background:none;border:1px solid var(--orange-dim);padding:.3rem .7rem;cursor:pointer;">↺ REINICIAR</button>
+          </div>
+        </div>
+        <!-- Info ghost-log -->
+        <div style="padding:1.5rem;">
+          <p style="font-family:'Orbitron',sans-serif;font-size:.65rem;color:var(--orange);margin-bottom:.8rem;">FUNCIONES</p>
+          <div style="font-size:.72rem;line-height:2;color:var(--orange-dim);margin-bottom:1.2rem;">
+            · Lee el journal del sistema<br>
+            · Traduce errores técnicos a español normal<br>
+            · Clasifica: GPU · Red · Seguridad · Disco<br>
+            · Detecta intentos de acceso SSH<br>
+            · Modo live --watch en tiempo real<br>
+            · Filtra por servicio o gravedad
+          </div>
+          <div style="border-top:1px solid var(--orange-dim);padding-top:1rem;">
+            <p style="font-size:.6rem;letter-spacing:.25em;color:var(--orange-dim);margin-bottom:.6rem;">// FLAGS</p>
+            <div style="font-size:.7rem;line-height:2.1;color:var(--orange-dim);">
+              <span style="color:var(--orange);">ghost-log</span><br>
+              <span style="color:var(--orange);">ghost-log --watch</span> <span style="color:var(--text-muted);">live</span><br>
+              <span style="color:var(--orange);">ghost-log --errors</span> <span style="color:var(--text-muted);">solo críticos</span><br>
+              <span style="color:var(--orange);">ghost-log --unit nginx</span><br>
+              <span style="color:var(--orange);">ghost-log --since "1h"</span><br>
+              <span style="color:var(--orange);">ghost-log --json</span>
+            </div>
+          </div>
+          <div style="display:flex;gap:.5rem;margin-top:1rem;flex-wrap:wrap;">
+            <span style="font-size:.6rem;border:1px solid var(--orange-dim);color:var(--text-muted);padding:.2rem .6rem;">PYTHON 3</span>
+            <span style="font-size:.6rem;border:1px solid var(--orange-dim);color:var(--text-muted);padding:.2rem .6rem;">JOURNALCTL</span>
+            <span style="font-size:.6rem;border:1px solid var(--orange-dim);color:var(--text-muted);padding:.2rem .6rem;">REGEX</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SCRIPT: animaciones Como se ve + ghost-log sim ══ -->
+  <script>
+  // ── Animación login (escritura de usuario) ────────────────
+  (function(){
+    const userEl = document.getElementById('login-user');
+    const passEl = document.getElementById('login-pass');
+    const termEl = document.getElementById('terminal-typing');
+    if(!userEl) return;
+
+    let phase=0, idx=0;
+    const user='ghost';
+    const pass='••••••••';
+    const cmd='ghost-map';
+
+    function tick(){
+      if(phase===0){
+        if(idx<user.length){ userEl.textContent+=user[idx++]; setTimeout(tick,120); }
+        else { phase=1; idx=0; setTimeout(tick,800); }
+      } else if(phase===1){
+        if(idx<pass.length){ passEl.textContent+=pass[idx++]; setTimeout(tick,100); }
+        else { phase=2; idx=0; setTimeout(tick,1200); }
+      } else if(phase===2){
+        if(termEl && idx<cmd.length){ termEl.textContent+=cmd[idx++]; setTimeout(tick,110); }
+        else { phase=0; idx=0; if(userEl) userEl.textContent=''; if(passEl) passEl.textContent=''; if(termEl) termEl.textContent=''; setTimeout(tick,2500); }
+      }
+    }
+    setTimeout(tick,1000);
+  })();
+
+  // ── ghost-log simulation ──────────────────────────────────
+  (function(){
+    const DUR3=90;
+    const O3='#c85a00',OD3='#7a3500',OG3='#ff7a1a',GR3='#2d5a1b',GREY3='#444',R3='#cc0000',Y3='#b8860b';
+    function sp(t,c){return `<span style="color:${c}">${t}</span>`;}
+    function ln(h){return h+'<br>';}
+
+    const F3=[
+      {t:0,clear:true,content:()=>ln(sp('root@ghost-eyes',OG3)+sp(':~# ',GREY3)+sp('ghost-log',O3)+sp('█',OG3))},
+      {t:2,clear:true,content:()=>
+        ln(sp('root@ghost-eyes',OG3)+sp(':~# ',GREY3)+sp('ghost-log',O3))+ln('')+
+        ln('  '+sp('GHOST-LOG · Logs en lenguaje humano',OG3))+ln('')+
+        ln('  '+sp('Leyendo 500 líneas del journal...',OD3))
+      },
+      {t:5,clear:true,content:()=>
+        ln('  '+sp('──────────────────────────────────────────────────────────────────────',OD3))+
+        ln('  '+sp('  TIPO         HORA              DESCRIPCIÓN',OD3))+
+        ln('  '+sp('──────────────────────────────────────────────────────────────────────',OD3))+ln('')+
+        ln('  '+sp('✓ ',GR3)+sp('SUDO        ',GR3)+sp('Apr 16 09:01 ',GREY3)+'Comando ejecutado con privilegios de administrador')+
+        ln('  '+sp('● ',GREY3)+sp('SERVICIO    ',GREY3)+sp('Apr 16 09:01 ',GREY3)+'Servicio sshd.service iniciado correctamente')+
+        ln('  '+sp('⌁ ',OD3)+sp('RED         ',OD3)+sp('Apr 16 09:03 ',GREY3)+'WiFi desconectada de forma inesperada')+
+        ln('  '+sp('● ',GREY3)+sp('SERVICIO    ',GREY3)+sp('Apr 16 09:04 ',GREY3)+'Servicio NetworkManager.service iniciado correctamente')+
+        ln('  '+sp('◈ ',OG3)+sp('GPU         ',OG3)+sp('Apr 16 09:06 ',GREY3)+sp('Driver nvidia-open cargado correctamente',GR3))
+      },
+      {t:18,clear:false,append:true,content:()=>
+        ln('  '+sp('⚠ ',R3)+sp('SEGURIDAD   ',R3)+sp('Apr 16 09:11 ',GREY3)+sp('Intento de acceso SSH usuario "root" desde 45.155.20.1',R3))+
+        ln('  '+sp('⚠ ',R3)+sp('SEGURIDAD   ',R3)+sp('Apr 16 09:11 ',GREY3)+sp('Contraseña incorrecta para "root" desde 45.155.20.1',R3))+
+        ln('  '+sp('⚠ ',R3)+sp('SEGURIDAD   ',R3)+sp('Apr 16 09:12 ',GREY3)+sp('Intento de acceso SSH usuario "admin" desde 45.155.20.1 (×3)',R3))
+      },
+      {t:30,clear:false,append:true,content:()=>
+        ln('  '+sp('⊘ ',Y3)+sp('DISCO       ',Y3)+sp('Apr 16 09:18 ',GREY3)+sp('Disco duro lleno — libera espacio con: ghost-clean',Y3))+
+        ln('  '+sp('▣ ',O3)+sp('MEMORIA     ',O3)+sp('Apr 16 09:20 ',GREY3)+'Sin memoria RAM — proceso firefox (PID 3021) fue forzado a cerrar')+
+        ln('  '+sp('⊛ ',OD3)+sp('FIREWALL    ',OD3)+sp('Apr 16 09:22 ',GREY3)+'Paquete de red bloqueado por el firewall (UFW) (×12)')
+      },
+      {t:48,clear:true,content:()=>
+        ln('')+
+        ln('  '+sp('╔══════════════════════════════════════════════════════╗',O3))+
+        ln('  '+sp('║',O3)+'  '+sp('RESUMEN',OG3)+'                                               '+sp('║',O3))+
+        ln('  '+sp('╠══════════════════════════════════════════════════════╣',O3))+
+        ln('  '+sp('║',O3)+'  '+sp('Entradas procesadas : ',OD3)+'18                              '+sp('║',O3))+
+        ln('  '+sp('║',O3)+'  '+sp('Críticos/Seguridad  : ',R3)+'3 '+sp('← Revisar',R3)+'                    '+sp('║',O3))+
+        ln('  '+sp('║',O3)+'  '+sp('Advertencias        : ',Y3)+'2                              '+sp('║',O3))+
+        ln('  '+sp('║',O3)+'  '+sp('SEGURIDAD           ',R3)+'3                              '+sp('║',O3))+
+        ln('  '+sp('║',O3)+'  '+sp('SERVICIO            ',GREY3)+'4                              '+sp('║',O3))+
+        ln('  '+sp('║',O3)+'  '+sp('FIREWALL            ',OD3)+'3                              '+sp('║',O3))+
+        ln('  '+sp('╚══════════════════════════════════════════════════════╝',O3))
+      },
+      {t:62,clear:true,content:()=>
+        ln(sp('root@ghost-eyes',OG3)+sp(':~# ',GREY3)+sp('ghost-log --watch',O3))+ln('')+
+        ln('  '+sp('Modo watch activo — Ctrl+C para salir',OD3))+ln('')+
+        ln('  '+sp('⊛ ',OD3)+sp('FIREWALL    ',OD3)+sp('09:23:01 ',GREY3)+'Paquete bloqueado desde 192.168.1.199')+
+        ln('  '+sp('⊛ ',OD3)+sp('FIREWALL    ',OD3)+sp('09:23:04 ',GREY3)+'Paquete bloqueado desde 192.168.1.199')+
+        ln('  '+sp('⚠ ',R3)+sp('SEGURIDAD   ',R3)+sp('09:23:09 ',GREY3)+sp('Nuevo intento SSH desde 192.168.1.199 ← MISMO INTRUSO',R3))
+      },
+      {t:80,clear:false,append:true,content:()=>
+        ln('')+ln('  '+sp('[ghost-log] Usa --errors para ver solo críticos.',OD3))
+      },
+    ];
+
+    let si3=null,ss3=null,fi3=0,acc3='';
+    function r3(el){
+      const out=document.getElementById('sim3-output'),pr=document.getElementById('sim3-progress'),tm=document.getElementById('sim3-timer');
+      if(!out) return;
+      pr.style.width=Math.min(100,(el/DUR3)*100)+'%'; tm.textContent=Math.floor(el)+'s';
+      while(fi3<F3.length&&F3[fi3].t<=el){const f=F3[fi3];if(f.clear)acc3=f.content();else if(f.append)acc3+=f.content();out.innerHTML=acc3;fi3++;}
+      if(el>=DUR3){clearInterval(si3);tm.textContent='90s';pr.style.background='var(--orange)';}
+    }
+    function s3(){ss3=Date.now();fi3=0;acc3='';const o=document.getElementById('sim3-output');if(o)o.innerHTML='';const p=document.getElementById('sim3-progress');if(p){p.style.width='0%';p.style.background='var(--orange-dim)';}clearInterval(si3);si3=setInterval(()=>r3((Date.now()-ss3)/1000),100);}
+    window.sim3Restart=function(){s3();};
+    const t3=document.getElementById('sim3-terminal');
+    if(t3&&'IntersectionObserver' in window){const o3=new IntersectionObserver(en=>{if(en[0].isIntersecting){s3();o3.disconnect();}},{threshold:0.3});o3.observe(t3);}else{s3();}
+  })();
+  </script>
+
+  <!-- Estilos animaciones Como se ve -->
+  <style>
+    @keyframes chibiFloat {
+      0%,100% { transform: translate(-50%,-50%) translateY(0px); }
+      50%      { transform: translate(-50%,-50%) translateY(-8px); }
+    }
+    @keyframes bootProgress {
+      0%   { width:0%; }
+      90%  { width:100%; }
+      100% { width:100%; }
+    }
+    @keyframes textPulse {
+      0%,100% { opacity:1; }
+      50%      { opacity:.6; }
+    }
+    @keyframes blink {
+      0%,100% { opacity:1; }
+      50%      { opacity:0; }
+    }
+  </style>
 
   <footer>
     GHOST EYES PROJECT &nbsp;·&nbsp; KALI CUSTOM BUILD &nbsp;·&nbsp; DOKKAEBI PROTOCOL &nbsp;·&nbsp; ACCESO RESTRINGIDO
