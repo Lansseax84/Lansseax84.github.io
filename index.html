@@ -459,22 +459,48 @@
       <div class="card">
         <p class="card-num">01</p>
         <p class="card-title">Programa</p>
-        <p class="card-body">Descripción del entorno, objetivos del proyecto y configuración base de Kali.</p>
+        <p class="card-body">Descripción del entorno, objetivos y configuración base de Kali modificado.</p>
       </div>
       <div class="card">
         <p class="card-num">02</p>
         <p class="card-title">Tipo de comandos</p>
-        <p class="card-body">Listado y clasificación de los comandos personalizados disponibles en el sistema.</p>
+        <p class="card-body">ghost-map · ghost-status · ghost-log · ghost-send · ghost-nvidia · ghost-drivers</p>
       </div>
       <div class="card">
         <p class="card-num">03</p>
-        <p class="card-title">Descarga</p>
-        <p class="card-body">Enlace para descargar el contenido completo del proyecto en un solo paquete.</p>
+        <p class="card-title">Como se ve</p>
+        <p class="card-body">Plymouth de arranque · Login táctica · Escritorio · Terminal con prompt naranja.</p>
       </div>
       <div class="card">
         <p class="card-num">04</p>
+        <p class="card-title">Descarga</p>
+        <p class="card-body">ZIP completo · ISO booteable · Instalador overlay · Comandos individuales.</p>
+      </div>
+      <div class="card">
+        <p class="card-num">05</p>
         <p class="card-title">Documentación</p>
-        <p class="card-body">Guía de instalación, explicación del sistema y uso correcto de cada herramienta.</p>
+        <p class="card-body">Guía de instalación, uso de comandos y personalización del sistema.</p>
+      </div>
+    </div>
+
+    <!-- Estado del proyecto -->
+    <div style="margin-top:2rem;border:1px solid var(--orange-dim);padding:1.5rem;position:relative;">
+      <div style="position:absolute;top:-10px;left:20px;background:var(--bg);padding:0 .6rem;
+                  font-family:'Orbitron',sans-serif;font-size:.6rem;letter-spacing:.25em;color:var(--orange-dim);">
+        ESTADO DEL PROYECTO
+      </div>
+      <div style="display:flex;gap:.7rem;flex-wrap:wrap;">
+        <span style="font-size:.62rem;letter-spacing:.15em;border:1px solid var(--orange);color:var(--orange);padding:.25rem .7rem;">✓ ghost-map v2</span>
+        <span style="font-size:.62rem;letter-spacing:.15em;border:1px solid var(--orange);color:var(--orange);padding:.25rem .7rem;">✓ ghost-log</span>
+        <span style="font-size:.62rem;letter-spacing:.15em;border:1px solid var(--orange);color:var(--orange);padding:.25rem .7rem;">✓ ghost-send</span>
+        <span style="font-size:.62rem;letter-spacing:.15em;border:1px solid var(--orange);color:var(--orange);padding:.25rem .7rem;">✓ ghost-nvidia</span>
+        <span style="font-size:.62rem;letter-spacing:.15em;border:1px solid var(--orange);color:var(--orange);padding:.25rem .7rem;">✓ ghost-drivers</span>
+        <span style="font-size:.62rem;letter-spacing:.15em;border:1px solid var(--orange);color:var(--orange);padding:.25rem .7rem;">✓ ghost-wallpaper</span>
+        <span style="font-size:.62rem;letter-spacing:.15em;border:1px solid var(--orange);color:var(--orange);padding:.25rem .7rem;">✓ ghost-status</span>
+        <span style="font-size:.62rem;letter-spacing:.15em;border:1px solid var(--orange);color:var(--orange);padding:.25rem .7rem;">✓ install.sh</span>
+        <span style="font-size:.62rem;letter-spacing:.15em;border:1px solid var(--orange-dim);color:var(--orange-dim);padding:.25rem .7rem;">⧖ ISO booteable</span>
+        <span style="font-size:.62rem;letter-spacing:.15em;border:1px solid var(--orange-dim);color:var(--orange-dim);padding:.25rem .7rem;">⧖ ghost-trace</span>
+        <span style="font-size:.62rem;letter-spacing:.15em;border:1px solid var(--orange-dim);color:var(--orange-dim);padding:.25rem .7rem;">⧖ ghost-watch</span>
       </div>
     </div>
   </section>
@@ -1065,45 +1091,124 @@
   </section>
 
   <!-- ── DESCARGA ── -->
-  <section id="descarga">
+  <section id="descarga" style="max-width:1100px;">
     <p class="section-tag">// 04 · PAQUETE</p>
     <h2 class="section-title">Enlace de Descarga</h2>
     <div class="section-divider"></div>
 
-    <p style="font-size:.85rem;line-height:2;color:var(--orange-dim);margin-bottom:1.5rem;">
-      Descarga el paquete completo: Kali Linux con todas las modificaciones de diseño,
-      sonido en login, mapa de red interactivo, detección de intrusos y comandos <code style="color:var(--orange)">ghost-*</code> ya instalados.
-      Ejecuta <code style="color:var(--orange)">./install.sh</code> como root sobre un Kali base. ISO booteable en fase 4.
-    </p>
+    <!-- 3 opciones de instalación -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-bottom:2.5rem;">
 
-    <div class="code-block" style="margin-bottom:1.5rem;">
-      <span>CONTENIDO DEL PAQUETE — ghost-eyes-v2.zip</span><br><br>
-      <span style="color:var(--orange-dim);">DISEÑO Y ARRANQUE</span><br>
-      /boot-anim/              → Animación Plymouth (La Parca) al encender<br>
-      /login-theme/            → Fondo negro · texto verde · sonido por tecla<br>
-      /sounds/key-soft.wav     → Sonido suave login<br><br>
-      <span style="color:var(--orange-dim);">DOTFILES · TERMINAL</span><br>
-      /dotfiles/.bashrc .zshrc .Xresources → Prompt naranja · colores · aliases<br><br>
-      <span style="color:var(--orange-dim);">COMANDOS · RED</span><br>
-      /python/ghost-map.py     → Mapa visual + detección intrusos + monitor fondo<br><br>
-      <span style="color:var(--orange-dim);">COMANDOS · SISTEMA</span><br>
-      /bash/ghost-status.sh    → Dashboard CPU/GPU/RAM/Red en tiempo real<br>
-      /bash/ghost-nvidia.sh    → Instalador drivers RTX 5060 Blackwell<br><br>
-      <span style="color:var(--orange-dim);">INSTALADOR</span><br>
-      install.sh               → Copia scripts · Plymouth · login · sonido · PATH
+      <!-- Opción A: ZIP completo -->
+      <div style="border:1px solid var(--orange);padding:1.5rem;position:relative;background:rgba(200,90,0,.04);">
+        <div style="position:absolute;top:-10px;left:16px;background:var(--bg);padding:0 .6rem;
+                    font-family:'Orbitron',sans-serif;font-size:.55rem;letter-spacing:.25em;color:var(--orange-glow);">
+          OPCIÓN A · RECOMENDADA
+        </div>
+        <p style="font-family:'Orbitron',sans-serif;font-size:.8rem;color:var(--orange);margin-bottom:.6rem;">ZIP COMPLETO</p>
+        <p style="font-size:.72rem;line-height:1.8;color:var(--orange-dim);margin-bottom:1rem;">
+          Para Kali Linux ya instalado. Descarga, descomprime y ejecuta <code style="color:var(--orange);">sudo bash install.sh</code>.
+          Instala todo automáticamente sobre tu Kali existente.
+        </p>
+        <div style="font-size:.62rem;color:var(--text-muted);margin-bottom:1rem;">
+          install.sh · ghost-map · ghost-log · ghost-send<br>
+          ghost-nvidia · ghost-drivers · ghost-wallpaper<br>
+          Plymouth · Login · Sonido · Dotfiles
+        </div>
+        <a class="dl-btn" href="#" style="display:flex;align-items:center;gap:.5rem;font-size:.65rem;">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
+          ghost-eyes-v2.zip
+        </a>
+      </div>
+
+      <!-- Opción B: ISO booteable -->
+      <div style="border:1px solid var(--orange-dim);padding:1.5rem;position:relative;background:rgba(200,90,0,.02);">
+        <div style="position:absolute;top:-10px;left:16px;background:var(--bg);padding:0 .6rem;
+                    font-family:'Orbitron',sans-serif;font-size:.55rem;letter-spacing:.25em;color:var(--orange-dim);">
+          OPCIÓN B · FASE 4
+        </div>
+        <p style="font-family:'Orbitron',sans-serif;font-size:.8rem;color:var(--orange-dim);margin-bottom:.6rem;">ISO BOOTEABLE</p>
+        <p style="font-size:.72rem;line-height:1.8;color:var(--orange-dim);margin-bottom:1rem;">
+          Kali Linux completo ya modificado. Grábalo en USB con Balena Etcher e instálalo como si fuera Kali normal. Todo pre-configurado.
+        </p>
+        <div style="font-size:.62rem;color:var(--text-muted);margin-bottom:1rem;">
+          Kali Rolling base · Ghost Eyes pre-instalado<br>
+          Driver RTX 5060 incluido · Plymouth activo<br>
+          ~4.5 GB · En desarrollo
+        </div>
+        <span style="font-size:.65rem;color:var(--orange-dim);border:1px solid var(--orange-dim);padding:.4rem 1rem;display:inline-block;letter-spacing:.1em;">
+          ⧖ DISPONIBLE EN FASE 4
+        </span>
+      </div>
+
+      <!-- Opción C: One-liner -->
+      <div style="border:1px solid var(--orange-dim);padding:1.5rem;position:relative;background:rgba(200,90,0,.02);">
+        <div style="position:absolute;top:-10px;left:16px;background:var(--bg);padding:0 .6rem;
+                    font-family:'Orbitron',sans-serif;font-size:.55rem;letter-spacing:.25em;color:var(--orange-dim);">
+          OPCIÓN C · UN COMANDO
+        </div>
+        <p style="font-family:'Orbitron',sans-serif;font-size:.8rem;color:var(--orange-dim);margin-bottom:.6rem;">OVERLAY INSTALL</p>
+        <p style="font-size:.72rem;line-height:1.8;color:var(--orange-dim);margin-bottom:1rem;">
+          Kali ya instalado sin modificar. Un solo comando instala todo sin tocar el sistema base ni necesitar el ZIP.
+        </p>
+        <div class="code-block" style="font-size:.65rem;padding:.8rem;margin-bottom:.8rem;border-left-color:var(--orange-dim);">
+          curl -sSL https://raw.githubusercontent.com/<br>
+          ghost-eyes/install/main/install.sh | sudo bash
+        </div>
+        <span style="font-size:.62rem;color:var(--text-muted);">Requiere conexión a internet</span>
+      </div>
     </div>
 
-    <div style="display:flex;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;">
-      <span style="font-size:.65rem;letter-spacing:.2em;border:1px solid var(--orange);color:var(--orange);padding:.3rem .8rem;">✓ ghost-map v2 · INCLUIDO</span>
-      <span style="font-size:.65rem;letter-spacing:.2em;border:1px solid var(--orange);color:var(--orange);padding:.3rem .8rem;">✓ ghost-nvidia · INCLUIDO</span>
-      <span style="font-size:.65rem;letter-spacing:.2em;border:1px solid var(--orange-dim);color:var(--orange-dim);padding:.3rem .8rem;">⧖ ghost-status · EN DESARROLLO</span>
-      <span style="font-size:.65rem;letter-spacing:.2em;border:1px solid var(--orange-dim);color:var(--orange-dim);padding:.3rem .8rem;">⧖ ISO BOOTEABLE · FASE 4</span>
+    <!-- Descargas individuales -->
+    <div style="border:1px solid var(--orange-dim);padding:1.5rem;margin-bottom:2rem;position:relative;">
+      <div style="position:absolute;top:-10px;left:16px;background:var(--bg);padding:0 .6rem;
+                  font-family:'Orbitron',sans-serif;font-size:.55rem;letter-spacing:.25em;color:var(--orange-dim);">
+        DESCARGAS INDIVIDUALES
+      </div>
+      <p style="font-size:.72rem;color:var(--orange-dim);margin-bottom:1.2rem;">
+        Si ya tienes ghost-eyes instalado y solo quieres un comando específico:
+      </p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.8rem;">
+        <a href="#" class="dl-btn" style="font-size:.62rem;padding:.5rem 1rem;justify-content:space-between;">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 16l-5-5h3V4h4v7h3l-5 5z"/></svg>
+          ghost-map.py
+        </a>
+        <a href="#" class="dl-btn" style="font-size:.62rem;padding:.5rem 1rem;justify-content:space-between;">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 16l-5-5h3V4h4v7h3l-5 5z"/></svg>
+          ghost-log.py
+        </a>
+        <a href="#" class="dl-btn" style="font-size:.62rem;padding:.5rem 1rem;justify-content:space-between;">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 16l-5-5h3V4h4v7h3l-5 5z"/></svg>
+          ghost-send.py
+        </a>
+        <a href="#" class="dl-btn" style="font-size:.62rem;padding:.5rem 1rem;justify-content:space-between;">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 16l-5-5h3V4h4v7h3l-5 5z"/></svg>
+          ghost-nvidia.sh
+        </a>
+        <a href="#" class="dl-btn" style="font-size:.62rem;padding:.5rem 1rem;justify-content:space-between;">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 16l-5-5h3V4h4v7h3l-5 5z"/></svg>
+          ghost-drivers.sh
+        </a>
+        <a href="#" class="dl-btn" style="font-size:.62rem;padding:.5rem 1rem;justify-content:space-between;">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 16l-5-5h3V4h4v7h3l-5 5z"/></svg>
+          ghost-wallpaper.py
+        </a>
+        <a href="#" class="dl-btn" style="font-size:.62rem;padding:.5rem 1rem;justify-content:space-between;">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 16l-5-5h3V4h4v7h3l-5 5z"/></svg>
+          install.sh
+        </a>
+      </div>
     </div>
 
-    <a class="dl-btn" href="ghost-eyes-v2.zip">
-      <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
-      DESCARGAR ghost-eyes-v2.zip
-    </a>
+    <!-- Estado actual -->
+    <div style="display:flex;gap:.8rem;flex-wrap:wrap;">
+      <span style="font-size:.62rem;letter-spacing:.15em;border:1px solid var(--orange);color:var(--orange);padding:.25rem .7rem;">✓ ghost-map v2</span>
+      <span style="font-size:.62rem;letter-spacing:.15em;border:1px solid var(--orange);color:var(--orange);padding:.25rem .7rem;">✓ ghost-send</span>
+      <span style="font-size:.62rem;letter-spacing:.15em;border:1px solid var(--orange);color:var(--orange);padding:.25rem .7rem;">✓ ghost-log</span>
+      <span style="font-size:.62rem;letter-spacing:.15em;border:1px solid var(--orange);color:var(--orange);padding:.25rem .7rem;">✓ ghost-nvidia</span>
+      <span style="font-size:.62rem;letter-spacing:.15em;border:1px solid var(--orange);color:var(--orange);padding:.25rem .7rem;">✓ install.sh</span>
+      <span style="font-size:.62rem;letter-spacing:.15em;border:1px solid var(--orange-dim);color:var(--orange-dim);padding:.25rem .7rem;">⧖ ISO · FASE 4</span>
+    </div>
   </section>
 
   <!-- ── DOCS ── -->
@@ -1113,20 +1218,25 @@
     <div class="section-divider"></div>
     <div class="doc-box">
       <p style="font-family:'Orbitron',sans-serif;font-size:.8rem;color:var(--orange);margin-bottom:1.2rem;">
-        GHOST EYES SYSTEM — MANUAL DE USUARIO v1.0
+        GHOST EYES SYSTEM — MANUAL DE USUARIO v2.0
       </p>
       <p style="font-size:.8rem;line-height:2;color:var(--orange-dim);">
-        <span style="color:var(--orange);">1. Instalación</span><br>
-        Clonar el repositorio, ejecutar install.sh con privilegios de root. El script configura Plymouth,
-        copia los dotfiles y registra los comandos ghost-* en el PATH del sistema.<br><br>
+        <span style="color:var(--orange);">1. Instalación rápida (Kali ya instalado)</span><br>
+        Descarga ghost-eyes-v2.zip, descomprime y ejecuta <code>sudo bash install.sh</code>.
+        El instalador hace todo: Plymouth, login, sonido, wallpaper, comandos en PATH.<br><br>
         <span style="color:var(--orange);">2. Primera sesión</span><br>
-        Al reiniciar verás la animación de arranque. La pantalla de login es negra con texto verde.
-        Escribe tu usuario: notarás un sonido suave por tecla (via aplay + wav minimalista).<br><br>
-        <span style="color:var(--orange);">3. Uso de comandos</span><br>
-        Escribe <code>ghost-help</code> en cualquier terminal para ver el listado completo con descripción.
-        Cada comando tiene flag --verbose para más detalle y --json para exportar el resultado.<br><br>
-        <span style="color:var(--orange);">4. Personalización</span><br>
-        Edita <code>~/.ghost-config</code> para cambiar colores, deshabilitar sonidos o añadir tus propios alias.
+        Reinicia. Verás el chibi de Dokkaebi en el arranque. Login en negro con texto verde y sonido suave por tecla.<br><br>
+        <span style="color:var(--orange);">3. Comandos principales</span><br>
+        <code>ghost-help</code> — listado completo · <code>ghost-map</code> — explorar red ·
+        <code>ghost-log</code> — leer logs · <code>ghost-send [ip] "msg"</code> — enviar mensaje cifrado<br><br>
+        <span style="color:var(--orange);">4. ghost-send — Mensajería</span><br>
+        En el receptor ejecuta <code>ghost-send --listen</code>. En el emisor:
+        <code>ghost-send 192.168.1.5 "hola" -archivo.zip</code>.
+        Cifrado AES-256, hash SHA-256, escaneo antivirus automático, viaje visual del paquete.<br><br>
+        <span style="color:var(--orange);">5. Drivers GPU</span><br>
+        RTX 5060: <code>sudo ghost-nvidia</code> · Otras GPUs: <code>sudo ghost-drivers</code><br><br>
+        <span style="color:var(--orange);">6. Personalización</span><br>
+        Edita <code>~/.bashrc</code> sección GHOST EYES para cambiar prompt, aliases o colores.
       </p>
     </div>
     <a class="dl-btn" href="#">
