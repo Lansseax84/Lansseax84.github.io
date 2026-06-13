@@ -1116,7 +1116,7 @@
           ghost-nvidia · ghost-drivers · ghost-wallpaper<br>
           Plymouth · Login · Sonido · Dotfiles
         </div>
-        <a class="dl-btn" href="ghost-eyes-v2.zip" style="display:flex;align-items:center;gap:.5rem;font-size:.65rem;">
+        <a class="dl-btn" href="#" style="display:flex;align-items:center;gap:.5rem;font-size:.65rem;">
           <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
           ghost-eyes-v2.zip
         </a>
@@ -2098,10 +2098,347 @@
     makeSim('sim6', F6, D);
     makeSim('sim7', F7, D);
 
-    // Fix restart functions names
-    window.sim4Restart=function(){window['sim4Restart']&&window['sim4Restart']();};
+    // ── SIM8: ghost-shield ──────────────────────────────────
+    const F8=[
+      {t:0,c:true,f:()=>l(s('root@ghost-eyes',OG)+s(':~# ',GY)+s('ghost-shield',O)+s('█',OG))},
+      {t:2,c:true,f:()=>
+        l(s('  ███████╗██╗  ██╗██╗███████╗██╗     ██████╗',OD))+
+        l(s('  ██╔════╝██║  ██║██║██╔════╝██║     ██╔══██╗',OD))+
+        l(s('  ███████╗███████║██║█████╗  ██║     ██║  ██║',O))+
+        l(s('  ╚════██║██╔══██║██║██╔══╝  ██║     ██║  ██║',O))+
+        l(s('  ███████║██║  ██║██║███████╗███████╗██████╔╝',OG))+
+        l('')+l(s('  GHOST EYES · Auditoría completa de seguridad',OD))+
+        l('')+l(s('  Análisis iniciado: '+new Date().toLocaleString('es'),GY))
+      },
+      {t:5,c:false,a:true,f:()=>
+        l('')+l(s('  ── FIREWALL ──────────────────────────────────',O))+
+        l('  '+s('✓',GR)+'  '+s('UFW                    ','#7a3500')+'  '+s('ACTIVO ✓',GR))+
+        l('  '+s('  ','')+'  '+s('22/tcp ALLOW','#444')+'     '+s('SSH','#444'))+
+        l('  '+s('  ','')+'  '+s('80/tcp ALLOW','#444')+'     '+s('HTTP','#444'))+
+        l('  '+s('✓',GR)+'  '+s('Reglas UFW             ','#7a3500')+'  '+s('3 reglas activas',GR))
+      },
+      {t:16,c:false,a:true,f:()=>
+        l('')+l(s('  ── INTENTOS SSH (24h) ─────────────────────────',O))+
+        l('  '+s('✗',R)+'  '+s('Intentos SSH (24h)     ',OD)+'  '+s('47 intentos de 3 IPs',R))+
+        l('  '+s('    ','')+s('45.155.20.1    ',W)+'  '+s('31 intentos',R)+'  '+s('root, admin, kali',GY))+
+        l('  '+s('    ','')+s('198.23.145.92  ',W)+'  '+s(' 9 intentos',R)+'  '+s('ubuntu, pi',GY))+
+        l('  '+s('    ','')+s('91.240.118.44  ',W)+'  '+s(' 7 intentos',R)+'  '+s('admin',GY))+
+        l('  '+s('⚠',Y)+'  '+s('fail2ban               ',OD)+'  '+s('No activo — recomendado',Y))
+      },
+      {t:30,c:false,a:true,f:()=>
+        l('')+l(s('  ── PUERTOS ABIERTOS ───────────────────────────',O))+
+        l('  '+s('·',OD)+'  '+s('Puerto 22              ',OD)+'  '+s('sshd',GY))+
+        l('  '+s('·',OD)+'  '+s('Puerto 80              ',OD)+'  '+s('apache2',GY))+
+        l('  '+s('⚠',Y)+'  '+s('Puerto 3306            ',OD)+'  '+s('mysql — revisar',Y))+
+        l('  '+s('✓',GR)+'  '+s('Sin puertos peligrosos ',OD)+'  '+s('23, 3389, 5900 cerrados',GR))
+      },
+      {t:44,c:false,a:true,f:()=>
+        l('')+l(s('  ── PROCESOS SOSPECHOSOS ───────────────────────',O))+
+        l('  '+s('✓',GR)+'  '+s('Procesos sospechosos   ',OD)+'  '+s('Ninguno detectado',GR))+
+        l('  '+s('·',OD)+'  '+s('Procesos como root     ',OD)+'  '+s('18 detectados',OD))
+      },
+      {t:56,c:false,a:true,f:()=>
+        l('')+l(s('  ── ACCESOS RECIENTES ──────────────────────────',O))+
+        l('  '+s('·',OD)+'  '+s('kali          ',W)+s('tty1          ',GY)+s('Mon Apr 14 09:22',GY))+
+        l('  '+s('·',OD)+'  '+s('kali          ',W)+s(':0            ',GY)+s('Mon Apr 14 08:45',GY))+
+        l('')+l(s('  ── ACTUALIZACIONES ────────────────────────────',O))+
+        l('  '+s('✓',GR)+'  '+s('Actualizaciones seg.   ',OD)+'  '+s('Al día ✓',GR))+
+        l('  '+s('⚠',Y)+'  '+s('Total pendientes       ',OD)+'  '+s('12 paquetes',Y))
+      },
+      {t:70,c:true,f:()=>
+        l(s('  ╔════════════════════════════════════════════════════╗',O))+
+        l(s('  ║',O)+'  '+s('GHOST-SHIELD · RESUMEN DE SEGURIDAD',OG)+'              '+s('║',O))+
+        l(s('  ╠════════════════════════════════════════════════════╣',O))+
+        l(s('  ║',O)+'  '+s('✗',R)+' 1 problema crítico: intentos SSH masivos         '+s('║',O))+
+        l(s('  ║',O)+'  '+s('⚠',Y)+' 2 advertencias: fail2ban, MySQL expuesto          '+s('║',O))+
+        l(s('  ╠════════════════════════════════════════════════════╣',O))+
+        l(s('  ║',O)+'  '+s('ghost-shield --fix   para aplicar correcciones',GY)+'  '+s('║',O))+
+        l(s('  ╚════════════════════════════════════════════════════╝',O))
+      },
+      {t:82,c:false,a:true,f:()=>l('')+l(s('  [ghost-shield] Usa --watch para monitoreo continuo.',OD))},
+    ];
+
+    // ── SIM9: ghost-dash ────────────────────────────────────
+    const GR9='#2d5a1b';
+    const F9=[
+      {t:0,c:true,f:()=>l(s('root@ghost-eyes',OG)+s(':~# ',GY)+s('ghost-dash',O)+s('█',OG))},
+      {t:2,c:true,f:()=>
+        l(s('  ██████╗  █████╗ ███████╗██╗  ██╗',OD))+
+        l(s('  ██╔══██╗██╔══██╗██╔════╝██║  ██║',OD))+
+        l(s('  ██║  ██║███████║███████╗███████║',O))+
+        l(s('  ██║  ██║██╔══██║╚════██║██╔══██║',O))+
+        l(s('  ██████╔╝██║  ██║███████║██║  ██║',OG))+
+        l('')+l(s('  GHOST EYES · Panel personal visual',OD))
+      },
+      {t:5,c:false,a:true,f:()=>
+        l('')+l(s('  ── RELOJ ──────────────────────────────────────',O))+
+        l('  '+s('┌─┐',OG)+' '+s('┌─┐',OG)+' '+s(' ',OG)+' '+s('┌─┐',OG)+' '+s('┌─┐',OG))+
+        l('  '+s('│ │',OG)+' '+s('├─┘',OG)+' '+s('●',OG)+' '+s('│ │',OG)+' '+s('└─┐',OG))+
+        l('  '+s('└─┘',OG)+' '+s('└─┘',OG)+' '+s(' ',OG)+' '+s('└─┘',OG)+' '+s('└─┘',OG))+
+        l('  '+s('Lunes, 14 de Abril de 2025',OD))
+      },
+      {t:15,c:false,a:true,f:()=>
+        l('')+l(s('  ── CLIMA ──────────────────────────────────────',O))+
+        l('  '+s('Barcelona, España',W)+'  '+s('⛅ Parcialmente nublado',W))+
+        l('  '+s('🌡 18°C',OG)+'  '+s('💧 65%',OD)+'  '+s('💨 12 km/h',OD))+
+        l('  '+s('Mín: 14°C',GY)+'  '+s('Máx: 22°C',GY))
+      },
+      {t:26,c:false,a:true,f:()=>
+        l('')+l(s('  ── SISTEMA RÁPIDO ─────────────────────────────',O))+
+        l('  '+s('CPU  ',OD)+' '+s('████░░░░░░░░░░░░',GR9)+'  '+s('24%',OG))+
+        l('  '+s('RAM  ',OD)+' '+s('12.4GB / 32GB',W))+
+        l('  '+s('DISCO',OD)+' '+s('220GB / 512GB (43%)',W))+
+        l('  '+s('IP   ',OD)+' '+s('192.168.1.45',OG))
+      },
+      {t:38,c:false,a:true,f:()=>
+        l('')+l(s('  ── NOTAS ──────────────────────────────────────',O))+
+        l('  '+s('#1',OD)+'  '+s('Revisar configuración nginx del servidor',W)+'  '+s('2025-04-12',GY))+
+        l('  '+s('#2',OD)+'  '+s('Actualizar ghost-eyes a v3 cuando salga',W)+'  '+s('2025-04-13',GY))+
+        l('  '+s('#3',OD)+'  '+s('Hacer backup de /etc antes del viernes',W)+'  '+s('2025-04-14',GY))
+      },
+      {t:52,c:false,a:true,f:()=>
+        l('')+l(s('  ── RECORDATORIOS ───────────────────────────────',O))+
+        l('  '+s('⏰',Y)+'  '+s('Reunión de equipo — videoconferencia',W)+'  '+s('en 42m',OD))+
+        l('  '+s('⏰',Y)+'  '+s('Ejecutar ghost-clean en el servidor',W)+'    '+s('en 2h 15m',OD))
+      },
+      {t:64,c:false,a:true,f:()=>
+        l('')+l(s('  ── TIP DEL DÍA ─────────────────────────────────',O))+
+        l('  '+s('💡',OD)+'  '+s('ghost-shield analiza tu sistema en busca de vulnerabilidades',W))
+      },
+      {t:78,c:false,a:true,f:()=>l('')+l(s('  [ghost-dash] Usa --note "texto" para añadir notas.',OD))},
+    ];
+
+    // ── SIM10: ghost-recon ──────────────────────────────────
+    const F10=[
+      {t:0,c:true,f:()=>l(s('root@ghost-eyes',OG)+s(':~# ',GY)+s('ghost-recon 192.168.1.45',O)+s('█',OG))},
+      {t:2,c:true,f:()=>
+        l(s('  ██████╗ ███████╗ ██████╗ ██████╗ ███╗   ██╗',OD))+
+        l(s('  ██╔══██╗██╔════╝██╔════╝██╔═══██╗████╗  ██║',OD))+
+        l(s('  ██████╔╝█████╗  ██║     ██║   ██║██╔██╗ ██║',O))+
+        l(s('  ██╔══██╗██╔══╝  ██║     ██║   ██║██║╚██╗██║',O))+
+        l(s('  ██║  ██║███████╗╚██████╗╚██████╔╝██║ ╚████║',OG))+
+        l('')+l(s('  GHOST EYES · Reconocimiento profundo de red',OD))
+      },
+      {t:5,c:false,a:true,f:()=>
+        l('')+
+        l('  '+s('[+]',O)+' Objetivo   : '+s('192.168.1.45',OG))+
+        l('  '+s('[+]',O)+' OS estimado: '+s('Linux/Unix (TTL=64)',OG))+
+        l('  '+s('[+]',O)+' Puertos    : '+s('26 a escanear (common)',OG))+
+        l('  '+s('Escaneando...',OD))
+      },
+      {t:8,c:false,a:true,f:()=>
+        l('')+l('  '+s('[',OD)+s('████░░░░░░░░░░░░░░░░',OD)+s(']',OD)+s('  20%',OD)+'  5/26')
+      },
+      {t:12,c:false,a:true,f:()=>
+        l('  '+s('[',OD)+s('████████████░░░░░░░░',OD)+s(']',OD)+s('  60%',OD)+'  15/26')
+      },
+      {t:16,c:false,a:true,f:()=>
+        l('  '+s('[',O)+s('████████████████████',O)+s(']',O)+s(' 100%',OG)+'  26/26')+
+        l('')+l('  '+s('[+]',O)+' '+s('6 puertos abiertos',OG)+' de 26 escaneados')
+      },
+      {t:20,c:true,f:()=>
+        l(s('  ╔══════════════════════════════════════════════════════════╗',O))+
+        l(s('  ║',O)+'  '+s('MAPA DE SERVICIOS — 192.168.1.45',OG)+'                       '+s('║',O))+
+        l(s('  ╠══════════════════════════════════════════════════════════╣',O))+
+        l(s('  ║',O)+'  '+s('◆ 192.168.1.45',OG)+'                                            '+s('║',O))+
+        l(s('  ║',O)+'  '+s('│',OD)+'                                                          '+s('║',O))+
+        l(s('  ║',O)+'  '+s('├── ',OD)+s(':22    ',OG)+s('SSH         ',W)+s('SSH-2.0-OpenSSH_9.2     ',GY)+s('║',O))+
+        l(s('  ║',O)+'  '+s('├── ',OD)+s(':80    ',OG)+s('HTTP        ',W)+s('Apache/2.4.57           ',GY)+s('║',O))+
+        l(s('  ║',O)+'  '+s('├── ',OD)+s(':443   ',OG)+s('HTTPS       ',W)+s('                        ',GY)+s('║',O))+
+        l(s('  ║',O)+'  '+s('├── ',OD)+s(':3306  ',Y)+s('MySQL       ',W)+s('MEDIO — sin auth externa',Y)+s('║',O))+
+        l(s('  ║',O)+'  '+s('├── ',OD)+s(':8080  ',OG)+s('HTTP-Alt    ',W)+s('Jetty/9.4.51            ',GY)+s('║',O))+
+        l(s('  ║',O)+'  '+s('└── ',OD)+s(':5432  ',OG)+s('PostgreSQL  ',W)+s('                        ',GY)+s('║',O))+
+        l(s('  ╚══════════════════════════════════════════════════════════╝',O))
+      },
+      {t:45,c:false,a:true,f:()=>
+        l('')+
+        l('  '+s('PUERTO    ','#7a3500')+'  '+s('SERVICIO      ','#7a3500')+'  '+s('BANNER                        ','#7a3500')+'  '+s('RIESGO','#7a3500'))+
+        l('  '+s('─'.repeat(68),O))+
+        l('  '+s('22        ',OG)+'  '+s('SSH           ',W)+'  '+s('SSH-2.0-OpenSSH_9.2           ',GY)+'  '+s('',GY))+
+        l('  '+s('80        ',OG)+'  '+s('HTTP          ',W)+'  '+s('Apache/2.4.57                 ',GY)+'  '+s('',GY))+
+        l('  '+s('443       ',OG)+'  '+s('HTTPS         ',W)+'  '+s('                              ',GY)+'  '+s('',GY))+
+        l('  '+s('3306      ',Y)+'  '+s('MySQL         ',W)+'  '+s('                              ',GY)+'  '+s('MEDIO — sin auth',Y))+
+        l('  '+s('8080      ',OG)+'  '+s('HTTP-Alt      ',W)+'  '+s('Jetty/9.4.51                  ',GY)+'  '+s('',GY))+
+        l('  '+s('5432      ',OG)+'  '+s('PostgreSQL    ',W)+'  '+s('                              ',GY)+'  '+s('',GY))
+      },
+      {t:62,c:false,a:true,f:()=>
+        l('')+l(s('  ⚠  PUERTOS DE RIESGO DETECTADOS:',Y))+
+        l('  '+s(':3306 — MEDIO — MySQL sin autenticación externa',Y))
+      },
+      {t:75,c:false,a:true,f:()=>l('')+l(s('  [ghost-recon] Usa --json para exportar resultados.',OD))},
+    ];
+
+    makeSim('sim8',  F8,  90);
+    makeSim('sim9',  F9,  90);
+    makeSim('sim10', F10, 90);
+
+    // Fix restart buttons
+    window.sim8Restart  = function(){ makeSim('sim8',  F8,  90); };
+    window.sim9Restart  = function(){ makeSim('sim9',  F9,  90); };
+    window.sim10Restart = function(){ makeSim('sim10', F10, 90); };
   })();
   </script>
+
+  <!-- ── GHOST-SHIELD ── -->
+  <section id="ghost-shield" style="max-width:1100px;scroll-margin-top:56px;">
+    <p class="section-tag">// 03i · SEGURIDAD</p>
+    <h2 class="section-title">ghost-shield</h2>
+    <div class="section-divider"></div>
+    <div style="border:1px solid var(--orange-dim);position:relative;background:rgba(200,90,0,.03);margin-bottom:3rem;">
+      <div style="position:absolute;top:-11px;left:20px;background:var(--bg);padding:0 .8rem;
+                  font-family:'Orbitron',sans-serif;font-size:.6rem;letter-spacing:.3em;color:var(--orange-dim);">
+        SEGURIDAD · AUDITORÍA COMPLETA
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:0;">
+        <div style="border-right:1px solid var(--orange-dim);padding:1.5rem;">
+          <p style="font-size:.6rem;letter-spacing:.3em;color:var(--orange-dim);margin-bottom:.8rem;">// SIMULACIÓN · 90s</p>
+          <div id="sim8-terminal" style="background:#000;border:1px solid #3a1800;font-family:'Share Tech Mono',monospace;font-size:.72rem;line-height:1.6;min-height:420px;overflow:hidden;">
+            <div style="background:#1a0800;padding:.4rem .8rem;border-bottom:1px solid #3a1800;">
+              <span style="font-size:.6rem;color:#4a2a10;letter-spacing:.2em;">root@ghost-eyes: ~</span>
+            </div>
+            <div id="sim8-output" style="padding:.8rem 1rem;"></div>
+          </div>
+          <div style="margin-top:.6rem;display:flex;align-items:center;gap:.8rem;">
+            <div style="flex:1;height:2px;background:#1a0800;"><div id="sim8-progress" style="height:100%;background:var(--orange-dim);width:0%;transition:width .3s linear;"></div></div>
+            <span id="sim8-timer" style="font-size:.6rem;color:var(--orange-dim);min-width:40px;text-align:right;">0s</span>
+            <button onclick="sim8Restart()" style="font-family:'Share Tech Mono',monospace;font-size:.6rem;color:var(--orange-dim);background:none;border:1px solid var(--orange-dim);padding:.3rem .7rem;cursor:pointer;">↺ REINICIAR</button>
+          </div>
+        </div>
+        <div style="padding:1.5rem;">
+          <p style="font-family:'Orbitron',sans-serif;font-size:.65rem;color:var(--orange);margin-bottom:.8rem;">FUNCIONES</p>
+          <div style="font-size:.72rem;line-height:2;color:var(--orange-dim);margin-bottom:1.2rem;">
+            · Estado del firewall (UFW/iptables)<br>
+            · Intentos de acceso SSH con IPs<br>
+            · Puertos abiertos y niveles de riesgo<br>
+            · Procesos sospechosos detectados<br>
+            · Historial de logins recientes<br>
+            · Actualizaciones de seguridad pendientes
+          </div>
+          <div style="border-top:1px solid var(--orange-dim);padding-top:1rem;">
+            <p style="font-size:.6rem;letter-spacing:.25em;color:var(--orange-dim);margin-bottom:.6rem;">// FLAGS</p>
+            <div style="font-size:.68rem;line-height:2.2;color:var(--orange-dim);">
+              <span style="color:var(--orange);">ghost-shield</span><br>
+              <span style="color:var(--orange);">ghost-shield --watch</span> <span style="color:var(--text-muted);">continuo</span><br>
+              <span style="color:var(--orange);">ghost-shield --fix</span> <span style="color:var(--text-muted);">auto-corregir</span><br>
+              <span style="color:var(--orange);">ghost-shield --json</span>
+            </div>
+          </div>
+          <div style="display:flex;gap:.5rem;margin-top:1rem;flex-wrap:wrap;">
+            <span style="font-size:.6rem;border:1px solid var(--orange-dim);color:var(--text-muted);padding:.2rem .6rem;">PYTHON 3</span>
+            <span style="font-size:.6rem;border:1px solid var(--orange-dim);color:var(--text-muted);padding:.2rem .6rem;">UFW</span>
+            <span style="font-size:.6rem;border:1px solid var(--orange-dim);color:var(--text-muted);padding:.2rem .6rem;">JOURNALCTL</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── GHOST-DASH ── -->
+  <section id="ghost-dash" style="max-width:1100px;scroll-margin-top:56px;">
+    <p class="section-tag">// 03j · UTILIDADES</p>
+    <h2 class="section-title">ghost-dash</h2>
+    <div class="section-divider"></div>
+    <div style="border:1px solid var(--orange-dim);position:relative;background:rgba(200,90,0,.03);margin-bottom:3rem;">
+      <div style="position:absolute;top:-11px;left:20px;background:var(--bg);padding:0 .8rem;
+                  font-family:'Orbitron',sans-serif;font-size:.6rem;letter-spacing:.3em;color:var(--orange-dim);">
+        UTILIDADES · PANEL PERSONAL
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:0;">
+        <div style="border-right:1px solid var(--orange-dim);padding:1.5rem;">
+          <p style="font-size:.6rem;letter-spacing:.3em;color:var(--orange-dim);margin-bottom:.8rem;">// SIMULACIÓN · 90s</p>
+          <div id="sim9-terminal" style="background:#000;border:1px solid #3a1800;font-family:'Share Tech Mono',monospace;font-size:.72rem;line-height:1.6;min-height:420px;overflow:hidden;">
+            <div style="background:#1a0800;padding:.4rem .8rem;border-bottom:1px solid #3a1800;">
+              <span style="font-size:.6rem;color:#4a2a10;letter-spacing:.2em;">root@ghost-eyes: ~</span>
+            </div>
+            <div id="sim9-output" style="padding:.8rem 1rem;"></div>
+          </div>
+          <div style="margin-top:.6rem;display:flex;align-items:center;gap:.8rem;">
+            <div style="flex:1;height:2px;background:#1a0800;"><div id="sim9-progress" style="height:100%;background:var(--orange-dim);width:0%;transition:width .3s linear;"></div></div>
+            <span id="sim9-timer" style="font-size:.6rem;color:var(--orange-dim);min-width:40px;text-align:right;">0s</span>
+            <button onclick="sim9Restart()" style="font-family:'Share Tech Mono',monospace;font-size:.6rem;color:var(--orange-dim);background:none;border:1px solid var(--orange-dim);padding:.3rem .7rem;cursor:pointer;">↺ REINICIAR</button>
+          </div>
+        </div>
+        <div style="padding:1.5rem;">
+          <p style="font-family:'Orbitron',sans-serif;font-size:.65rem;color:var(--orange);margin-bottom:.8rem;">FUNCIONES</p>
+          <div style="font-size:.72rem;line-height:2;color:var(--orange-dim);margin-bottom:1.2rem;">
+            · Reloj ASCII en tiempo real<br>
+            · Clima en ASCII (wttr.in)<br>
+            · Resumen rápido CPU/RAM/IP<br>
+            · Notas persistentes (crear/borrar)<br>
+            · Recordatorios con cuenta atrás<br>
+            · Tip del día rotativo
+          </div>
+          <div style="border-top:1px solid var(--orange-dim);padding-top:1rem;">
+            <p style="font-size:.6rem;letter-spacing:.25em;color:var(--orange-dim);margin-bottom:.6rem;">// FLAGS</p>
+            <div style="font-size:.68rem;line-height:2.2;color:var(--orange-dim);">
+              <span style="color:var(--orange);">ghost-dash</span><br>
+              <span style="color:var(--orange);">ghost-dash --note "texto"</span><br>
+              <span style="color:var(--orange);">ghost-dash --remind "texto" --in 30</span><br>
+              <span style="color:var(--orange);">ghost-dash --weather Barcelona</span>
+            </div>
+          </div>
+          <div style="display:flex;gap:.5rem;margin-top:1rem;flex-wrap:wrap;">
+            <span style="font-size:.6rem;border:1px solid var(--orange-dim);color:var(--text-muted);padding:.2rem .6rem;">PYTHON 3</span>
+            <span style="font-size:.6rem;border:1px solid var(--orange-dim);color:var(--text-muted);padding:.2rem .6rem;">WTTR.IN</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── GHOST-RECON ── -->
+  <section id="ghost-recon" style="max-width:1100px;scroll-margin-top:56px;">
+    <p class="section-tag">// 03k · RED</p>
+    <h2 class="section-title">ghost-recon</h2>
+    <div class="section-divider"></div>
+    <div style="border:1px solid var(--orange-dim);position:relative;background:rgba(200,90,0,.03);margin-bottom:3rem;">
+      <div style="position:absolute;top:-11px;left:20px;background:var(--bg);padding:0 .8rem;
+                  font-family:'Orbitron',sans-serif;font-size:.6rem;letter-spacing:.3em;color:var(--orange-dim);">
+        RED · RECONOCIMIENTO PROFUNDO
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:0;">
+        <div style="border-right:1px solid var(--orange-dim);padding:1.5rem;">
+          <p style="font-size:.6rem;letter-spacing:.3em;color:var(--orange-dim);margin-bottom:.8rem;">// SIMULACIÓN · 90s</p>
+          <div id="sim10-terminal" style="background:#000;border:1px solid #3a1800;font-family:'Share Tech Mono',monospace;font-size:.72rem;line-height:1.6;min-height:420px;overflow:hidden;">
+            <div style="background:#1a0800;padding:.4rem .8rem;border-bottom:1px solid #3a1800;">
+              <span style="font-size:.6rem;color:#4a2a10;letter-spacing:.2em;">root@ghost-eyes: ~</span>
+            </div>
+            <div id="sim10-output" style="padding:.8rem 1rem;"></div>
+          </div>
+          <div style="margin-top:.6rem;display:flex;align-items:center;gap:.8rem;">
+            <div style="flex:1;height:2px;background:#1a0800;"><div id="sim10-progress" style="height:100%;background:var(--orange-dim);width:0%;transition:width .3s linear;"></div></div>
+            <span id="sim10-timer" style="font-size:.6rem;color:var(--orange-dim);min-width:40px;text-align:right;">0s</span>
+            <button onclick="sim10Restart()" style="font-family:'Share Tech Mono',monospace;font-size:.6rem;color:var(--orange-dim);background:none;border:1px solid var(--orange-dim);padding:.3rem .7rem;cursor:pointer;">↺ REINICIAR</button>
+          </div>
+        </div>
+        <div style="padding:1.5rem;">
+          <p style="font-family:'Orbitron',sans-serif;font-size:.65rem;color:var(--orange);margin-bottom:.8rem;">FUNCIONES</p>
+          <div style="font-size:.72rem;line-height:2;color:var(--orange-dim);margin-bottom:1.2rem;">
+            · Escaneo de puertos con threads<br>
+            · Captura de banners de servicios<br>
+            · OS fingerprinting por TTL<br>
+            · Mapa ASCII visual del objetivo<br>
+            · Niveles de riesgo por puerto<br>
+            · Exporta resultados en JSON
+          </div>
+          <div style="border-top:1px solid var(--orange-dim);padding-top:1rem;">
+            <p style="font-size:.6rem;letter-spacing:.25em;color:var(--orange-dim);margin-bottom:.6rem;">// FLAGS</p>
+            <div style="font-size:.68rem;line-height:2.2;color:var(--orange-dim);">
+              <span style="color:var(--orange);">ghost-recon 192.168.1.1</span><br>
+              <span style="color:var(--orange);">ghost-recon 192.168.1.1 --ports 1-1024</span><br>
+              <span style="color:var(--orange);">ghost-recon dominio.com --fast</span><br>
+              <span style="color:var(--orange);">ghost-recon 10.0.0.1 --json</span>
+            </div>
+          </div>
+          <div style="display:flex;gap:.5rem;margin-top:1rem;flex-wrap:wrap;">
+            <span style="font-size:.6rem;border:1px solid var(--orange-dim);color:var(--text-muted);padding:.2rem .6rem;">PYTHON 3</span>
+            <span style="font-size:.6rem;border:1px solid var(--orange-dim);color:var(--text-muted);padding:.2rem .6rem;">THREADS</span>
+            <span style="font-size:.6rem;border:1px solid var(--orange-dim);color:var(--text-muted);padding:.2rem .6rem;">SOCKETS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <footer>
     GHOST EYES PROJECT &nbsp;·&nbsp; KALI CUSTOM BUILD &nbsp;·&nbsp; DOKKAEBI PROTOCOL &nbsp;·&nbsp; ACCESO RESTRINGIDO
